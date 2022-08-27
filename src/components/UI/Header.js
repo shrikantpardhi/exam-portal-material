@@ -90,8 +90,8 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0.5,
   },
   drawerItemSelected: {
-    "& .MuiListItemText-root":{
-      opacity:1
+    "& .MuiListItemText-root": {
+      opacity: 1,
     },
   },
   drawerIconContainer: {
@@ -111,10 +111,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = (props) => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const location = useLocation();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
@@ -187,7 +187,7 @@ export const Header = (props) => {
   ];
 
   const handleChange = (e, newValue) => {
-    setValue(newValue);
+    props.setValue(newValue);
   };
 
   const handleClick = (e) => {
@@ -203,18 +203,21 @@ export const Header = (props) => {
   const handleMenuItemClick = (e, i) => {
     setAnchorEl(null);
     setOpenMenu(false);
-    setSelectedIndex(i);
+    props.setSelectedIndex(i);
   };
 
   useEffect(() => {
     [...menuOptions, ...menus].forEach((menu) => {
       switch (location.pathname) {
         case `${menu.link}`:
-          if (value !== menu.activeIndex) {
-            setValue(menu.activeIndex);
+          if (props.value !== menu.activeIndex) {
+            props.setValue(menu.activeIndex);
             //only for menu items
-            if (menu.selectedIndex && menu.selectedIndex !== selectedIndex) {
-              setSelectedIndex(menu.selectedIndex);
+            if (
+              menu.selectedIndex &&
+              menu.selectedIndex !== props.selectedIndex
+            ) {
+              props.setSelectedIndex(menu.selectedIndex);
             }
           }
           break;
@@ -222,12 +225,12 @@ export const Header = (props) => {
           break;
       }
     });
-  }, [value, menuOptions, selectedIndex, menus]);
+  }, [props.value, menuOptions, props.selectedIndex, menus]);
 
   const tabs = (
     <React.Fragment>
       <Tabs
-        value={value}
+        value={props.value}
         onChange={handleChange}
         className={classes.tabCotained}
         indicatorColor="primary"
@@ -290,7 +293,7 @@ export const Header = (props) => {
               <ListItem
                 divider
                 button
-                selected={value === menu.activeIndex}
+                selected={props.value === menu.activeIndex}
                 onClick={(event) => {
                   handleChange(event, menu.activeIndex);
                   setOpenDrawer(false);
@@ -298,11 +301,10 @@ export const Header = (props) => {
                 component={Link}
                 to={menu.link}
                 key={`${menu}${i}`}
-                classes={{selected: classes.drawerItemSelected}}
+                classes={{ selected: classes.drawerItemSelected }}
               >
                 <ListItemText
-                  className={classes.drawerItem
-                  }
+                  className={classes.drawerItem}
                   primary={menu.name}
                 />
               </ListItem>
@@ -311,14 +313,17 @@ export const Header = (props) => {
           <ListItem
             divider
             button
-            selected={value === 7}
+            selected={props.value === 7}
             onClick={(event) => {
               handleChange(event, 7);
               setOpenDrawer(false);
             }}
             component={Link}
             to="/register"
-            className={{root : classes.drawerItemEstimate, selected: classes.drawerItemSelected}}
+            className={{
+              root: classes.drawerItemEstimate,
+              selected: classes.drawerItemSelected,
+            }}
           >
             <ListItemText className={classes.drawerItem} primary="Register" />
           </ListItem>
@@ -364,10 +369,10 @@ export const Header = (props) => {
                     to={option.link}
                     onClick={(event) => {
                       handleMenuItemClick(event, i);
-                      setValue(1);
+                      props.setValue(1);
                       handleClose(event);
                     }}
-                    selected={i === selectedIndex && value === 1}
+                    selected={i === props.selectedIndex && props.value === 1}
                   >
                     {option.name}
                   </MenuItem>
