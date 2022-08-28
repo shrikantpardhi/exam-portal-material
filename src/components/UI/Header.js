@@ -16,6 +16,12 @@ import Toolbar from "@mui/material/Toolbar";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles, useTheme } from "@mui/styles";
+import { styled } from "@mui/material/styles";
+
+const Root = styled("div")(({ theme }) => ({
+  height: "100%",
+  backgroundColor: theme.palette.common.blue,
+}));
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -29,6 +35,8 @@ function ElevationScroll(props) {
     elevation: trigger ? 4 : 0,
   });
 }
+
+
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -65,7 +73,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
   },
   tab: {
-    ...theme.typography.tab,
+    fontFamily: "Railway",
+    textTransform: "none",
+    fontWeight: 700,
+    fontSize: "1rem",
+    color: "white",
     minWidth: 10,
     marginLeft: "10px",
     marginRight: "10px",
