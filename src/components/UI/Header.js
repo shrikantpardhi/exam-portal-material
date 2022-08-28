@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Typography, useMediaQuery } from "@material-ui/core";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import Toolbar from "@material-ui/core/Toolbar";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import MenuIcon from "@material-ui/icons/Menu";
-import { makeStyles, useTheme } from "@material-ui/styles";
+import { Typography, useMediaQuery } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Toolbar from "@mui/material/Toolbar";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import MenuIcon from "@mui/icons-material/Menu";
+import { makeStyles, useTheme } from "@mui/styles";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "10px",
   },
   menu: {
-    backgroundColor: theme.palette.common.arcBlue,
+    backgroundColor: theme.palette.common.blue,
     color: "white",
     borderRadius: "0",
   },
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawer: {
-    backgroundColor: theme.palette.common.arcBlue,
+    backgroundColor: theme.palette.common.blue,
   },
   drawerItem: {
     ...theme.typography.tab,
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   drawerItemEstimate: {
-    backgroundColor: theme.palette.common.arcOrange,
+    backgroundColor: theme.palette.common.orange,
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,

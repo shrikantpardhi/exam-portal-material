@@ -1,12 +1,15 @@
-import React , {useState} from "react";
-import { ThemeProvider } from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { ThemeProvider } from "@mui/styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import {theme} from "./UI/Theme";
+import { theme } from "./UI/Theme";
 import { Header } from "./UI/Header";
 import Footer from "./UI/Footer";
+import LandingPage from "./LandingPage";
+import About from "./About";
+import { User } from "./admin/User";
 
 function App() {
-    const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [value, setValue] = useState(0);
 
   return (
@@ -19,7 +22,7 @@ function App() {
           setSelectedIndex={setSelectedIndex}
         />
         <Routes>
-          <Route exact path="/" element={<div>Homepage</div>} />
+          <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/exams" element={<div>exams</div>} />
           <Route exact path="/subjects" element={<div>subjects</div>} />
           <Route exact path="/questions" element={<div>questions</div>} />
@@ -29,10 +32,12 @@ function App() {
             path="/categories"
             element={<div>Exam categories</div>}
           />
-          <Route exact path="/about" element={<div>about</div>} />
+          <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<div>contact</div>} />
-          <Route exact path="/customers" element={<div>customer</div>} />
+          <Route exact path="/customers" element={<User />} />
           <Route exact path="/profile" element={<div>profile</div>} />
+          <Route exact path="/login" element={<div>Login</div>} />
+          <Route exact path="/register" element={<div>Register</div>} />
         </Routes>
         <Footer
           theme={theme}
