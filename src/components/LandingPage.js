@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -12,69 +12,20 @@ import CardActionArea from "@mui/material/CardActionArea";
 import { Link } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
-  registerButton: {
-    ...theme.typography.registerHereButton,
-    margin: "1rem",
-    borderRadius: 50,
-    height: 45,
-    width: 145,
-  },
   animation: {
     maxWidth: "50em",
     minWidth: "21em",
     marginTop: "2em",
     marginLeft: "10%",
   },
-  studyMaterialButton: {
-    borderColor: theme.palette.common.blue,
-    color: theme.palette.common.blue,
-    borderWidth: 2,
-    margin: "1rem",
-    textTransform: "none",
-    borderRadius: 50,
-    fontFamily: "Roboto",
-    fontWeight: "bold",
-    fontSize: "0.9em",
-    height: 45,
-    width: 175,
-  },
-  mainCotainer: {
-    marginBottom: "5em",
-  },
-  maintext: {
-    ...theme.typography.h2,
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "2.2rem",
-      fontWeight: 600,
-      lineHeight: "3.2rem",
-    },
-  },
-  dataTitle: {
-    color: theme.palette.common.blue,
-    fontWeight: 600,
-    margin: "1rem",
-  },
-  card: {
-    backgroundColor: theme.palette.common.orange,
-    width:275,
-  },
   cardMedia: {
     height: 140,
-  },
-  cardTitle: {
-    ...theme.typography.h4,
-  },
-  gridItem: {
-    margin: "0.5em",
-  },
-  innerContainer: {
-    marginLeft: "1em",
-    marginRight: "1em",
   },
 }));
 
 const LandingPage = (props) => {
   const classes = useStyle();
+  const theme = useTheme();
 
   const categories = [
     {
@@ -95,7 +46,7 @@ const LandingPage = (props) => {
   ];
 
   return (
-    <Grid container direction="column" className={classes.mainContainer}>
+    <Grid container direction="column" sx={{ marginBottom: "2em" }}>
       {/* Guest Block */}
       <Grid item>
         <Grid
@@ -105,7 +56,17 @@ const LandingPage = (props) => {
           direction="row"
         >
           <Grid sm item>
-            <Typography align="center" className={classes.maintext}>
+            <Typography
+              align="center"
+              sx={{
+                ...theme.typography.h2,
+                [theme.breakpoints.down("sm")]: {
+                  fontSize: "2.2rem",
+                  fontWeight: 600,
+                  lineHeight: "3.2rem",
+                },
+              }}
+            >
               Bringing the High Quality
               <br />
               Free Test Series
@@ -115,7 +76,13 @@ const LandingPage = (props) => {
             <Grid item>
               <Button
                 variant="contained"
-                className={classes.registerButton}
+                sx={{
+                  ...theme.typography.registerHereButton,
+                  margin: "1rem",
+                  borderRadius: 50,
+                  height: 45,
+                  width: 145,
+                }}
                 color="secondary"
               >
                 Register Here
@@ -124,7 +91,19 @@ const LandingPage = (props) => {
             <Grid item>
               <Button
                 variant="outlined"
-                className={classes.studyMaterialButton}
+                sx={{
+                  borderColor: theme.palette.common.blue,
+                  color: theme.palette.common.blue,
+                  borderWidth: 2,
+                  margin: "1rem",
+                  textTransform: "none",
+                  borderRadius: 50,
+                  fontFamily: "Roboto",
+                  fontWeight: "bold",
+                  fontSize: "0.9em",
+                  height: 45,
+                  width: 175,
+                }}
               >
                 <span style={{ marginRight: 10 }}>Study Material</span>
                 <ArrowForwardIcon />
@@ -140,16 +119,33 @@ const LandingPage = (props) => {
       {/* Exam List */}
       <Grid item>
         <Grid sm item>
-          <Typography variant="h5" className={classes.dataTitle}>
+          <Typography
+            variant="h5"
+            sx={{
+              color: theme.palette.common.blue,
+              fontWeight: 600,
+              margin: "1rem",
+            }}
+          >
             Exam Category
           </Typography>
         </Grid>
-        <Grid container direction="row" className={classes.innerContainer}>
+        <Grid
+          container
+          direction="row"
+          sx={{ gap: 1, marginLeft: "1em", marginRight: "1em" }}
+        >
           {categories.map((cat) => (
-            <Grid item className={classes.gridItem}>
+            <Grid item>
               <CardActionArea component={Link} to="#">
-                <Card variant="outlined" className={classes.card}>
-                  <CardHeader className={classes.cardTitle} title={cat.title} />
+                <Card
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: theme.palette.common.orange,
+                    width: 275,
+                  }}
+                >
+                  <CardHeader variant="h4" title={cat.title} />
                   <CardContent>
                     <Grid container>
                       <Grid item>
@@ -166,16 +162,33 @@ const LandingPage = (props) => {
       {/* Subject List */}
       <Grid item>
         <Grid sm item>
-          <Typography variant="h5" className={classes.dataTitle}>
+          <Typography
+            variant="h5"
+            sx={{
+              color: theme.palette.common.blue,
+              fontWeight: 600,
+              margin: "1rem",
+            }}
+          >
             Subject
           </Typography>
         </Grid>
-        <Grid container direction="row" className={classes.innerContainer}>
+        <Grid
+          container
+          direction="row"
+          sx={{ gap: 1, marginLeft: "1em", marginRight: "1em" }}
+        >
           {categories.map((cat) => (
-            <Grid item className={classes.gridItem}>
+            <Grid item>
               <CardActionArea component={Link} to="#">
-                <Card variant="outlined" className={classes.card}>
-                  <CardHeader className={classes.cardTitle} title={cat.title} />
+                <Card
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: theme.palette.common.orange,
+                    width: 275,
+                  }}
+                >
+                  <CardHeader variant="h4" title={cat.title} />
                   <CardContent>
                     <Grid container>
                       <Grid item>
