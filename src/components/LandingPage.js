@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -75,7 +75,6 @@ const useStyle = makeStyles((theme) => ({
 
 const LandingPage = (props) => {
   const classes = useStyle();
-  const theme = useTheme();
 
   const categories = [
     {

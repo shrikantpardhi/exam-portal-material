@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
@@ -15,7 +15,6 @@ const useStyle = makeStyles((theme) => ({
 
 const About = (props) => {
     const classes = useStyle();
-    const theme = useTheme();
 
   return (
     <Grid container direction="column">

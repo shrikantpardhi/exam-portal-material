@@ -16,12 +16,6 @@ import Toolbar from "@mui/material/Toolbar";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles, useTheme } from "@mui/styles";
-import { styled } from "@mui/material/styles";
-
-const Root = styled("div")(({ theme }) => ({
-  height: "100%",
-  backgroundColor: theme.palette.common.blue,
-}));
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -35,8 +29,6 @@ function ElevationScroll(props) {
     elevation: trigger ? 4 : 0,
   });
 }
-
-
 
 const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
@@ -72,49 +64,23 @@ const useStyles = makeStyles((theme) => ({
   tabCotained: {
     marginLeft: "auto",
   },
-  tab: {
-    fontFamily: "Railway",
-    textTransform: "none",
-    fontWeight: 700,
-    fontSize: "1rem",
-    color: "white",
-    minWidth: 10,
-    marginLeft: "10px",
-    marginRight: "10px",
-  },
   menu: {
-    backgroundColor: theme.palette.common.blue,
+    backgroundColor: "red",
     color: "white",
     borderRadius: "0",
   },
   menuItem: {
     ...theme.typography.tab,
-    opacity: 0.5,
+    opacity: 0.7,
     "&:hover": {
       opacity: 1,
     },
   },
-  drawer: {
-    backgroundColor: theme.palette.common.blue,
-  },
-  drawerItem: {
-    ...theme.typography.tab,
-    opacity: 0.5,
-  },
+
   drawerItemSelected: {
     "& .MuiListItemText-root": {
       opacity: 1,
     },
-  },
-  drawerIconContainer: {
-    marginLeft: "auto",
-    color: "white",
-    "&:hover": {
-      backgroundColor: "transparent",
-    },
-  },
-  drawerItemEstimate: {
-    backgroundColor: theme.palette.common.orange,
   },
   appbar: {
     zIndex: theme.zIndex.modal + 1,
@@ -130,7 +96,9 @@ export const Header = (props) => {
   const location = useLocation();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const iOS =
+    typeof navigator !== "undefined" &&
+    /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const menuOptions = [
@@ -191,11 +159,6 @@ export const Header = (props) => {
       link: "/about",
       activeIndex: 7,
     },
-    {
-      name: "Contact Us",
-      link: "/contact",
-      activeIndex: 8,
-    },
   ];
 
   const handleChange = (e, newValue) => {
@@ -245,23 +208,14 @@ export const Header = (props) => {
         value={props.value}
         onChange={handleChange}
         className={classes.tabCotained}
+        textColor="inherit"
         indicatorColor="primary"
       >
-        {/* <Tab
-          aria-owns={anchorEl ? "exam-menu" : undefined}
-          aria-haspopup={anchorEl ? "true" : undefined}
-          onMouseOver={(event) => handleClick(event)}
-          className={classes.tab}
-          component={Link}
-          to="/exams"
-          label="Exam"
-        /> */}
-
         {menus.map((menu, i) => {
           return (
             <Tab
               key={`${menu}${i}`}
-              className={classes.tab}
+              className={classes.menuItem}
               component={Link}
               to={menu.link}
               label={menu.name}
@@ -272,17 +226,10 @@ export const Header = (props) => {
           );
         })}
         <Tab
-          className={classes.tab}
+          // className={classes.tab}
           component={Link}
           to="/login"
           label="Login"
-        />
-        <Tab
-          className={classes.tab}
-          component={Link}
-          color="secondary"
-          to="/register"
-          label="Register"
         />
       </Tabs>
     </React.Fragment>
@@ -296,14 +243,20 @@ export const Header = (props) => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
-        classes={{ paper: classes.drawer }}
+        PaperProps={{
+          sx: {
+            minWidth: 200,
+            backgroundColor: theme.palette.common.blue,
+            color: "white",
+          },
+        }}
       >
         <div className={classes.toolbarMargin} />
         <List disablePadding component="nav" aria-label="Sidebar">
           {menus.map((menu, i) => {
             return (
               <ListItem
-                divider
+                key={`${menu}${i}`}
                 button
                 selected={props.value === menu.activeIndex}
                 onClick={(event) => {
@@ -312,38 +265,31 @@ export const Header = (props) => {
                 }}
                 component={Link}
                 to={menu.link}
-                key={`${menu}${i}`}
                 classes={{ selected: classes.drawerItemSelected }}
+                divider
+                sx={{
+                  color: "white",
+                  opacity: 0.7,
+                  "&:hover": {
+                    opacity: 1,
+                  },
+                  "&.Mui-selected, &.Mui-selected:hover": {
+                    opacity: 1,
+                  },
+                }}
               >
-                <ListItemText
-                  className={classes.drawerItem}
-                  primary={menu.name}
-                />
+                <ListItemText primary={menu.name} />
               </ListItem>
             );
           })}
-          <ListItem
-            divider
-            button
-            selected={props.value === 7}
-            onClick={(event) => {
-              handleChange(event, 7);
-              setOpenDrawer(false);
-            }}
-            component={Link}
-            to="/register"
-            className={{
-              root: classes.drawerItemEstimate,
-              selected: classes.drawerItemSelected,
-            }}
-          >
-            <ListItemText className={classes.drawerItem} primary="Register" />
-          </ListItem>
         </List>
       </SwipeableDrawer>
       <IconButton
         onClick={() => setOpenDrawer(!openDrawer)}
-        className={classes.drawerIconContainer}
+        sx={{
+          marginLeft: "auto",
+          color: "white",
+        }}
         disableRipple
       >
         <MenuIcon />
@@ -367,10 +313,16 @@ export const Header = (props) => {
               open={openMenu}
               onClose={handleClose}
               MenuListProps={{ onMouseLeave: handleClose }}
-              classes={{ paper: classes.menu }}
-              elevation={0}
               keepMounted
               style={{ zIndex: 1302 }}
+              PaperProps={{
+                sx: {
+                  elevation:0,
+                  backgroundColor: theme.palette.common.blue,
+                  color: "white",
+
+                },
+              }}
             >
               {menuOptions.map((option, i) => {
                 return (
