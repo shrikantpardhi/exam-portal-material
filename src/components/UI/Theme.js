@@ -16,6 +16,7 @@ export const theme = createTheme({
            },
            background: {
              paper: `${arcBlue}`,
+             card: `${arcBlue}`,
            },
          },
          typography: {

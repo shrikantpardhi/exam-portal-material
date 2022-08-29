@@ -13,7 +13,9 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.blue,
     width: "100%",
     zIndex: 1302,
-    position: "relative",
+    display: "flex",
+    position: "absolute",
+    marginBottom:0,
   },
   adorment: {
     width: "20em",
