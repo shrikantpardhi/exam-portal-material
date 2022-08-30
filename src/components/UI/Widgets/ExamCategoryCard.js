@@ -10,14 +10,9 @@ import CardActionArea from "@mui/material/CardActionArea";
 export const ExamCategoryCard = (props) => {
   const theme = useTheme();
   return (
-    <Grid
-      container
-      direction="row"
-      sx={{ margin:1 }}
-      spacing={1}
-    >
+    <Grid container direction="row" sx={{ margin: 1 }} spacing={1}>
       {props.categories.map((cat) => (
-        <Grid item key={cat.title} xs={2}>
+        <Grid item key={cat.title} xs={12} sm={6} md={4} lg={3}>
           <CardActionArea component={Link} to="#">
             <Card
               variant="outlined"

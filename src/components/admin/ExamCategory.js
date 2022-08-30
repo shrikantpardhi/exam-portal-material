@@ -51,7 +51,7 @@ const ExamCategory = (props) => {
     setOpenDialog(false);
   };
 
-  const saveCategory = (values) => () => {
+  const handleSubmit = (values) => {
     const items = [...categories];
     items.push({ id: "6", title: values.category });
     console.log(items);
@@ -93,7 +93,7 @@ const ExamCategory = (props) => {
         direction="row"
       >
         <Grid item>
-          <Grid container spacing={2} sx={{marginBottom:2}}>
+          <Grid container spacing={2} sx={{ marginBottom: 2 }}>
             <Grid item>
               <Typography sx={{ ...theme.typography.h5 }}>
                 Exam Category
@@ -104,7 +104,6 @@ const ExamCategory = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 fullWidth
-                xtField
                 placeholder="Search here..."
                 InputProps={{
                   startAdornment: (
@@ -133,7 +132,7 @@ const ExamCategory = (props) => {
       <Box sx={{ m: 1 }}>
         <Grid container spacing={2}>
           {categories.map((category) => (
-            <Grid item xs={12} sm={6} md={4} lg={3}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
               <Card
                 variant="outlined"
                 sx={{
@@ -206,11 +205,15 @@ const ExamCategory = (props) => {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                saveCategory(values);
-                setSubmitting(false);
-                handleClose();
-              }, 400);
+              //save data here
+              const items = [...categories];
+              items.push({ id: "6", title: values.category });
+              setCategories(items);
+              handleClose(false);
+              //   setTimeout(() => {
+              //     setSubmitting(false);
+              //     handleClose();
+              //   }, 400);
             }}
           >
             {({
