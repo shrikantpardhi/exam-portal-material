@@ -41,21 +41,30 @@ const ExamCategory = (props) => {
       title: "NEET",
     },
   ]);
+  const persistCategories = useState(categories);
   const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpenDialog(true);
   };
 
+  const handleSearchBox = (event) => {
+    let keyword = event.target.value;
+    const items = [...categories]
+    let newList = []
+    items.forEach((item)=>{
+        if (item.title.toUpperCase().includes(keyword.toUpperCase())) {
+          newList.push(item);
+        }
+    })
+    if(newList.length !== 0){
+        setCategories(newList)
+    }else{
+        setCategories(...persistCategories);
+    }
+  };
   const handleClose = () => {
     setOpenDialog(false);
-  };
-
-  const handleSubmit = (values) => {
-    const items = [...categories];
-    items.push({ id: "6", title: values.category });
-    console.log(items);
-    alert(JSON.stringify(values, null, 2));
   };
 
   const editCategoryHandler = (category) => () => {
@@ -105,6 +114,7 @@ const ExamCategory = (props) => {
                 variant="outlined"
                 fullWidth
                 placeholder="Search here..."
+                // onChange={handleSearchBox}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -206,9 +216,10 @@ const ExamCategory = (props) => {
             }}
             onSubmit={(values, { setSubmitting }) => {
               //save data here
-              const items = [...categories];
-              items.push({ id: "6", title: values.category });
-              setCategories(items);
+              setCategories([
+                ...categories,
+                { id: "6", title: values.category },
+              ]);
               handleClose(false);
               //   setTimeout(() => {
               //     setSubmitting(false);
