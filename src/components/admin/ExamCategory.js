@@ -24,6 +24,7 @@ import { Formik } from "formik";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const ExamCategory = (props) => {
+    const emptyCategory = {id:"", title:""};
   const theme = useTheme();
   const [categories, setCategories] = useState([
     { id: 1, title: "SSC" },
@@ -41,8 +42,8 @@ const ExamCategory = (props) => {
       title: "NEET",
     },
   ]);
-  const persistCategories = useState(categories);
   const [openDialog, setOpenDialog] = React.useState(false);
+  const [currentCategory, setCurrentCategory] = useState(emptyCategory);
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -60,21 +61,24 @@ const ExamCategory = (props) => {
     if(newList.length !== 0){
         setCategories(newList)
     }else{
-        setCategories(...persistCategories);
+        setCategories(...categories);
     }
   };
+
   const handleClose = () => {
     setOpenDialog(false);
   };
 
   const editCategoryHandler = (category) => () => {
-    const items = [...categories];
-    items.forEach((element) => {
-      if (element.id === category.id) {
-        element.title = "Updated";
-      }
-    });
-    setCategories(items);
+    setCurrentCategory(category);
+    setOpenDialog(true);
+    // const items = [...categories];
+    // items.forEach((element) => {
+    //   if (element.id === category.id) {
+    //     element.title = "Updated";
+    //   }
+    // });
+    // setCategories(items);
   };
 
   const deleteCategoryHandler = (category) => () => {
@@ -198,10 +202,16 @@ const ExamCategory = (props) => {
       </Box>
 
       <Dialog open={openDialog} onClose={handleClose} fullWidth>
-        <DialogTitle>Add Category</DialogTitle>
+        <DialogTitle>
+          <Typography sx={{ ...theme.typography.h5, fontSize:"1.25rem", textAlign:"center"}}>
+            {currentCategory.title.length !== 0
+              ? "Edit Category"
+              : "Add Category"}
+          </Typography>
+        </DialogTitle>
         <DialogContent>
           <Formik
-            initialValues={{ category: "", premium: "0" }}
+            initialValues={{ category: currentCategory.title, premium: "0" }}
             validate={(values) => {
               const errors = {};
               if (!values.category) {
