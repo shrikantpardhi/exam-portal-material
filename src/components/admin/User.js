@@ -7,7 +7,7 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import IconButton from "@mui/material/IconButton";
 
-const label = { inputProps: { "aria-label": "Color switch demo" } };
+const label = { inputProps: { "aria-label": "Swich User State" } };
 
 export const User = (props) => {
   const theme = useTheme();

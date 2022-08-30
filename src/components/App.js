@@ -7,6 +7,7 @@ import Footer from "./UI/Footer";
 import LandingPage from "./LandingPage";
 import About from "./About";
 import { User } from "./admin/User";
+import ExamCategory from "./admin/ExamCategory";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -30,7 +31,7 @@ function App() {
           <Route
             exact
             path="/categories"
-            element={<div>Exam categories</div>}
+            element={<ExamCategory />}
           />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<div>contact</div>} />

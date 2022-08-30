@@ -82,9 +82,6 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
-  appbar: {
-    zIndex: theme.zIndex.modal + 1,
-  },
 }));
 
 export const Header = (props) => {
@@ -299,7 +296,11 @@ export const Header = (props) => {
   return (
     <React.Fragment>
       <ElevationScroll>
-        <AppBar position="fixed" color="primary" className={classes.appbar}>
+        <AppBar
+          position="fixed"
+          color="primary"
+          sx={{ zIndex: theme.zIndex.modal + 1 }}
+        >
           <Toolbar>
             <Button component={Link} to="/" className={classes.logo}>
               <Typography variant="h6" className={classes.title}>
@@ -317,10 +318,9 @@ export const Header = (props) => {
               style={{ zIndex: 1302 }}
               PaperProps={{
                 sx: {
-                  elevation:0,
+                  elevation: 0,
                   backgroundColor: theme.palette.common.blue,
                   color: "white",
-
                 },
               }}
             >

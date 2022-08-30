@@ -5,11 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Divider from "@mui/material/Divider";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import CardActionArea from "@mui/material/CardActionArea";
-import { Link } from "react-router-dom";
+import { ExamCategoryCard } from "./UI/Widgets/ExamCategoryCard";
 
 const useStyle = makeStyles((theme) => ({
   animation: {
@@ -130,46 +126,7 @@ const LandingPage = (props) => {
             Exam Category
           </Typography>
         </Grid>
-        <Grid
-          container
-          direction="row"
-          sx={{ gap: 1, marginLeft: "1em", marginRight: "1em" }}
-        >
-          {categories.map((cat) => (
-            <Grid item>
-              <CardActionArea component={Link} to="#">
-                <Card
-                  variant="outlined"
-                  sx={{
-                    backgroundColor: theme.palette.background.card,
-                    width: 250,
-                    textAlign: "center",
-                    color: "white",
-                    fontWeight: 700,
-                  }}
-                >
-                  <CardHeader variant="h4" title={cat.title} />
-                  <Divider variant="middle" />
-                  <CardContent>
-                    <Grid container direction="column">
-                      <Grid item>
-                        <Grid container direction="row" justifyContent="space-between">
-                          <Grid item>
-                            Total Exam
-                          </Grid>
-                          <Grid item>
-                              200
-                          </Grid>
-                        </Grid>
-                        <Typography></Typography>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </CardActionArea>
-            </Grid>
-          ))}
-        </Grid>
+        <ExamCategoryCard categories={categories} />
       </Grid>
     </Grid>
   );

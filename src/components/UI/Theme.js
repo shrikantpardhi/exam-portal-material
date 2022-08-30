@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 
 const arcBlue = "#0B72B9";
-const arcOrange = "#FFBA60";
+const arcOrange = "#FFA500";
 export const theme = createTheme({
          palette: {
            common: {
@@ -16,7 +16,10 @@ export const theme = createTheme({
            },
            background: {
              paper: `${arcBlue}`,
-             card: `${arcBlue}`,
+             card: "#ae7fe3",
+           },
+           white:{
+            main: "#ffffff"
            },
          },
          typography: {
@@ -53,8 +56,20 @@ export const theme = createTheme({
            h4: {
              fontFamily: "Raleway",
              fontSize: "1rem",
-             fontWeight: 400,
+             fontWeight: 800,
              color: `${arcBlue}`,
+           },
+           h5: {
+             fontFamily: "Raleway",
+             fontSize: "1.25rem",
+             fontWeight: 700,
+             color: `${arcBlue}`,
+           },
+           cardTitle: {
+             fontFamily: "Raleway",
+             fontSize: "1.25rem",
+             fontWeight: 700,
+             color: `${arcOrange}`,
            },
          },
        });
