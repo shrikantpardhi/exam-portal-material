@@ -8,6 +8,7 @@ import LandingPage from "./LandingPage";
 import About from "./About";
 import { User } from "./admin/User";
 import ExamCategory from "./admin/ExamCategory";
+import ExamPage from "./ExamPage";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -24,15 +25,12 @@ function App() {
         />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/exams" element={<div>exams</div>} />
+          {/* <Route exact path="/exams" element={<ExamPage />} /> */}
           <Route exact path="/subjects" element={<div>subjects</div>} />
           <Route exact path="/questions" element={<div>questions</div>} />
           <Route exact path="/results" element={<div>results</div>} />
-          <Route
-            exact
-            path="/categories"
-            element={<ExamCategory />}
-          />
+          <Route exact path="/categories" element={<ExamCategory />} />
+          <Route exact path="/category/:name/:id" element={<ExamPage />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<div>contact</div>} />
           <Route exact path="/customers" element={<User />} />

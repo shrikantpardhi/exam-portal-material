@@ -12,23 +12,9 @@ const useStyle = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.common.blue,
     width: "100%",
-    zIndex: 1302,
-    display: "flex",
-    position: "absolute",
-    marginBottom:0,
-  },
-  adorment: {
-    width: "20em",
-    verticalAlignment: "bottom",
-    [theme.breakpoints.down("md")]: {
-      width: "15em",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "10em",
-    },
-  },
-  mainContainer: {
-    // position: "absolute",
+    // zIndex: 1302,
+    // display: "flex",
+    position: "relative",
   },
   link: {
     color: "white",
@@ -66,7 +52,6 @@ export default function Footer(props) {
       <Grid
         container
         justifyContent="center"
-        className={classes.mainContainer}
         style={{ color: "white" }}
       >
         <Grid container justifyContent="space-between">

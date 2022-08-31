@@ -24,23 +24,14 @@ import { Formik } from "formik";
 import DialogTitle from "@mui/material/DialogTitle";
 
 const ExamCategory = (props) => {
-    const emptyCategory = {id:"", title:""};
+  const emptyCategory = { id: "", title: "" };
   const theme = useTheme();
   const [categories, setCategories] = useState([
-    { id: 1, title: "SSC" },
-    {
-      id: 2,
-      title: "UPSC",
-    },
-    { id: 3, title: "RBI" },
-    {
-      id: 4,
-      title: "RRB",
-    },
-    {
-      id: 5,
-      title: "NEET",
-    },
+    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
+    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
+    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
+    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
+    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
   ]);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [currentCategory, setCurrentCategory] = useState(emptyCategory);
@@ -51,17 +42,17 @@ const ExamCategory = (props) => {
 
   const handleSearchBox = (event) => {
     let keyword = event.target.value;
-    const items = [...categories]
-    let newList = []
-    items.forEach((item)=>{
-        if (item.title.toUpperCase().includes(keyword.toUpperCase())) {
-          newList.push(item);
-        }
-    })
-    if(newList.length !== 0){
-        setCategories(newList)
-    }else{
-        setCategories(...categories);
+    const items = [...categories];
+    let newList = [];
+    items.forEach((item) => {
+      if (item.title.toUpperCase().includes(keyword.toUpperCase())) {
+        newList.push(item);
+      }
+    });
+    if (newList.length !== 0) {
+      setCategories(newList);
+    } else {
+      setCategories(...categories);
     }
   };
 
@@ -72,13 +63,6 @@ const ExamCategory = (props) => {
   const editCategoryHandler = (category) => () => {
     setCurrentCategory(category);
     setOpenDialog(true);
-    // const items = [...categories];
-    // items.forEach((element) => {
-    //   if (element.id === category.id) {
-    //     element.title = "Updated";
-    //   }
-    // });
-    // setCategories(items);
   };
 
   const deleteCategoryHandler = (category) => () => {
@@ -162,7 +146,7 @@ const ExamCategory = (props) => {
                     color="text.secondary"
                     gutterBottom
                   >
-                    Word of the Day
+                    {category.premium === 0 ? "Free" : "Paid"}
                   </Typography>
                   <Typography
                     sx={{ ...theme.typography.cardTitle, marginBottom: "1em" }}
@@ -171,7 +155,7 @@ const ExamCategory = (props) => {
                     {category.title}
                   </Typography>
                   <Typography variant="body2">
-                    well meaning and kindly.
+                    Total exams : {category.totalCount}
                     <br />
                   </Typography>
                 </CardContent>
@@ -203,7 +187,13 @@ const ExamCategory = (props) => {
 
       <Dialog open={openDialog} onClose={handleClose} fullWidth>
         <DialogTitle>
-          <Typography sx={{ ...theme.typography.h5, fontSize:"1.25rem", textAlign:"center"}}>
+          <Typography
+            sx={{
+              ...theme.typography.h5,
+              fontSize: "1.25rem",
+              textAlign: "center",
+            }}
+          >
             {currentCategory.title.length !== 0
               ? "Edit Category"
               : "Add Category"}

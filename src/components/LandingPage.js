@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles, useTheme } from "@mui/styles";
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Divider from "@mui/material/Divider";
 import { ExamCategoryCard } from "./UI/Widgets/ExamCategoryCard";
+import SubjectCard from "./UI/Widgets/SubjectCard";
 
 const useStyle = makeStyles((theme) => ({
   animation: {
@@ -22,23 +23,20 @@ const useStyle = makeStyles((theme) => ({
 const LandingPage = (props) => {
   const classes = useStyle();
   const theme = useTheme();
-
   const categories = [
-    {
-      title: "SSC",
-    },
-    {
-      title: "UPSC",
-    },
-    {
-      title: "RBI",
-    },
-    {
-      title: "RRB",
-    },
-    {
-      title: "NEET",
-    },
+    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
+    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
+    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
+    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
+    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
+  ];
+
+  const subjects = [
+    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
+    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
+    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
+    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
+    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
   ];
 
   return (
@@ -127,6 +125,22 @@ const LandingPage = (props) => {
           </Typography>
         </Grid>
         <ExamCategoryCard categories={categories} />
+      </Grid>
+      {/* Subject List */}
+      <Grid item>
+        <Grid sm item>
+          <Typography
+            variant="h5"
+            sx={{
+              color: theme.palette.common.blue,
+              fontWeight: 600,
+              margin: "1rem",
+            }}
+          >
+            Exam Category
+          </Typography>
+        </Grid>
+        <SubjectCard subjects={subjects} />
       </Grid>
     </Grid>
   );
