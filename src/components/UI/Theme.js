@@ -18,6 +18,7 @@ export const theme = createTheme({
       paper: `${arcBlue}`,
       card: "#ae7fe3",
       headingBox: "#d1e6e5",
+      body: "#d1e6e5",
     },
     white: {
       main: "#ffffff",

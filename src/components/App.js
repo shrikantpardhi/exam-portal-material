@@ -9,6 +9,7 @@ import About from "./About";
 import { User } from "./admin/User";
 import ExamCategory from "./admin/ExamCategory";
 import ExamPage from "./ExamPage";
+import ExamsPage from "./admin/ExamsPage";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,7 +26,7 @@ function App() {
         />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          {/* <Route exact path="/exams" element={<ExamPage />} /> */}
+          <Route exact path="/exams" element={<ExamsPage />} />
           <Route exact path="/subjects" element={<div>subjects</div>} />
           <Route exact path="/questions" element={<div>questions</div>} />
           <Route exact path="/results" element={<div>results</div>} />
