@@ -16,6 +16,10 @@ import Toolbar from "@mui/material/Toolbar";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles, useTheme } from "@mui/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Login from "../auth/Login";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -90,13 +94,15 @@ export const Header = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
 
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const location = useLocation();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const iOS =
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const [openDrawer, setOpenDrawer] = useState(false);
 
   const menuOptions = [
     {
@@ -222,12 +228,7 @@ export const Header = (props) => {
             />
           );
         })}
-        <Tab
-          // className={classes.tab}
-          component={Link}
-          to="/login"
-          label="Login"
-        />
+        <Tab label="Login" onClick={() => setOpenLogin(true)} />
       </Tabs>
     </React.Fragment>
   );
@@ -281,13 +282,20 @@ export const Header = (props) => {
           })}
         </List>
       </SwipeableDrawer>
+      <Button
+        color="inherit"
+        sx={{ ml: "auto" }}
+        onClick={() => setOpenLogin(true)}
+      >
+        Login
+      </Button>
       <IconButton
         onClick={() => setOpenDrawer(!openDrawer)}
         sx={{
-          marginLeft: "auto",
+          // marginLeft: "auto",
           color: "white",
         }}
-        disableRipple
+        // disableRipple
       >
         <MenuIcon />
       </IconButton>
@@ -347,6 +355,17 @@ export const Header = (props) => {
         </AppBar>
       </ElevationScroll>
       <div className={classes.toolbarMargin} />
+
+      <Dialog
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        fullWidth
+        sx={{
+          zIndex: 1302,
+        }}
+      >
+        <Login setOpenLogin={setOpenLogin} />
+      </Dialog>
     </React.Fragment>
   );
 };

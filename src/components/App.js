@@ -10,6 +10,7 @@ import { User } from "./admin/User";
 import ExamCategory from "./admin/ExamCategory";
 import ExamPage from "./ExamPage";
 import ExamsPage from "./admin/ExamsPage";
+import Login from "./auth/Login";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -36,7 +37,7 @@ function App() {
           <Route exact path="/contact" element={<div>contact</div>} />
           <Route exact path="/customers" element={<User />} />
           <Route exact path="/profile" element={<div>profile</div>} />
-          <Route exact path="/login" element={<div>Login</div>} />
+          <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<div>Register</div>} />
         </Routes>
         <Footer
