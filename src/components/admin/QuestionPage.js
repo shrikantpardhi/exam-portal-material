@@ -12,14 +12,20 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  TextField,
+  MenuItem,
+  Checkbox,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Formik, FieldArray, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const DetailRow = (props) => {
   const theme = useTheme();
@@ -139,6 +145,7 @@ const QuestionPage = (props) => {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(initialQuestion);
   const [loading, setLoading] = useState(false);
+  const [answerError, setAnswerError] = useState(false);
 
   const fromExam = {
     id: "1",
@@ -188,7 +195,6 @@ const QuestionPage = (props) => {
     setOpenAnswerDialog(!openAnswerDialog);
   };
 
-
   const handleAddQuestionEvent = (row) => () => {
     setCurrentQuestion(row);
     setOpenAnswerDialog(!openAnswerDialog);
@@ -200,6 +206,10 @@ const QuestionPage = (props) => {
 
   const handleEdit = (row) => () => {
     console.log(row);
+  };
+
+  const handleAnswerError = () => {
+    setAnswerError(!answerError);
   };
 
   const columns = [
@@ -255,9 +265,7 @@ const QuestionPage = (props) => {
           //     </IconButton>
           //   </Tooltip>,
           <Tooltip title="Add Answers">
-            <IconButton sx={{ ml: 1 }} onClick={
-                handleAddQuestionEvent(row)
-            }>
+            <IconButton sx={{ ml: 1 }} onClick={handleAddQuestionEvent(row)}>
               <AddIcon color="info" />
             </IconButton>
           </Tooltip>,
@@ -475,7 +483,128 @@ const QuestionPage = (props) => {
               Answers
             </Typography>
           </DialogTitle>
-          <DialogContent></DialogContent>
+          <DialogContent>
+            <Formik
+              initialValues={{ noOfAnswers: "", answerList: [] }}
+              validationSchema={Yup.object({
+                answerList: Yup.array().of(
+                  Yup.object().shape({
+                    answerText: Yup.string().required("Required"),
+                  })
+                ),
+              })}
+              onSubmit={(values, { setSubmitting }) => {
+                console.log(JSON.stringify(values));
+                setSubmitting(false);
+                values.answerList.forEach((answer) => {
+                  if (!answer.isCorrect) {
+                    setAnswerError(true);
+                  }
+                });
+              }}
+            >
+              {({
+                values,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isSubmitting,
+              }) => (
+                <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
+                  {/* {currentQuestion.questionTypeDto.questionTypeCode === "M"
+                    ? "Multi"
+                    : currentQuestion.questionTypeDto.questionTypeCode === "S"
+                    ? "Single"
+                    : "null"} */}
+
+                  <FieldArray
+                    name="answerList"
+                    render={({ insert, remove, push }) => (
+                      <div>
+                        <Typography color="red" sx={{ textAlign: "center" }}>
+                          {answerError === true
+                            ? "Atleast one answer must be selected"
+                            : ""}
+                        </Typography>
+                        {values.answerList.length > 0 &&
+                          values.answerList.map((answer, index) => (
+                            <Grid
+                              key={index}
+                              container
+                              alignItems="center"
+                              spacing={1}
+                              sx={{ m: 1 }}
+                            >
+                              <Grid item>
+                                <Checkbox
+                                  id={`answerList.${index}.isCorrect`}
+                                  name={`answerList.${index}.isCorrect`}
+                                  onChange={handleChange}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                />
+                              </Grid>
+                              <Grid item xs={8}>
+                                <TextField
+                                  fullWidth
+                                  variant="outlined"
+                                  id={`answerList.${index}.answerText`}
+                                  type="string"
+                                  name={`answerList.${index}.answerText`}
+                                  onBlur={handleBlur}
+                                  onChange={handleChange}
+                                  label={`Answer.${index + 1}`}
+                                />
+                                <ErrorMessage
+                                  name={`answerList.${index}.answerText`}
+                                  component="div"
+                                  className="field-error"
+                                />
+                              </Grid>
+                              <Grid item>
+                                <IconButton onClick={() => remove(index)}>
+                                  <CloseIcon />
+                                </IconButton>
+                              </Grid>
+                            </Grid>
+                          ))}
+                        <Box sx={{ textAlign: "center" }}>
+                          <Tooltip title="Add Answer">
+                            <IconButton
+                              onClick={() =>
+                                push({ answerText: "", isCorrect: "" })
+                              }
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                      </div>
+                    )}
+                  />
+                  <Grid
+                    container
+                    justifyContent="space-between"
+                    sx={{ marginTop: 1 }}
+                  >
+                    <Grid item>
+                      <Button variant="text" onClick={handleAnswerDialog}>
+                        Cancel
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        disabled={isSubmitting}
+                        type="submit"
+                      >
+                        Save
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              )}
+            </Formik>
+          </DialogContent>
         </Dialog>
       </Box>
     </>
