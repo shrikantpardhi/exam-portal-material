@@ -19,12 +19,20 @@ export const theme = createTheme({
       card: "#ae7fe3",
       headingBox: "#d1e6e5",
       body: "#d1e6e5",
+      detailBox: "#ae9ae9",
     },
     white: {
       main: "#ffffff",
     },
+    divider: {
+      light: "#ffffff",
+      dark: "#000000",
+    },
   },
   typography: {
+    color: {
+      white: "#ffffff",
+    },
     tab: {
       fontFamily: "Railway",
       textTransform: "none",
@@ -73,6 +81,12 @@ export const theme = createTheme({
       fontWeight: 700,
       color: `${arcBlue}`,
     },
+    rowData: {
+      fontFamily: "Raleway",
+      fontSize: "1rem",
+      fontWeight: 500,
+      color: "#ffffff",
+    },
     body1: "span",
     body2: "span",
     cardTitle: {
@@ -80,6 +94,25 @@ export const theme = createTheme({
       fontSize: "1.25rem",
       fontWeight: 700,
       color: `${arcOrange}`,
+    },
+  },
+  zIndex: {
+    mobile_stepper: 1000,
+    fab: 1050,
+    speed_dial: 1050,
+    app_bar: 1100,
+    drawer: 1200,
+    modal: 1300,
+    snackbar: 1400,
+    tooltip: 1500,
+  },
+  shape: {
+    detailBox: {
+      borderRadius: 2,
+      p: 2,
+    },
+    box: {
+      borderRadius: 2,
     },
   },
 });

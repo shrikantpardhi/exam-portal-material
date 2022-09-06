@@ -11,6 +11,7 @@ import ExamCategory from "./admin/ExamCategory";
 import ExamPage from "./ExamPage";
 import ExamsPage from "./admin/ExamsPage";
 import Login from "./auth/Login";
+import QuestionPage from "./admin/QuestionPage";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -27,7 +28,9 @@ function App() {
         />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
+          {/* Admin Menus */}
           <Route exact path="/exams" element={<ExamsPage />} />
+          <Route exact path="/exam/:name/:id" element={<QuestionPage />}/>
           <Route exact path="/subjects" element={<div>subjects</div>} />
           <Route exact path="/questions" element={<div>questions</div>} />
           <Route exact path="/results" element={<div>results</div>} />
