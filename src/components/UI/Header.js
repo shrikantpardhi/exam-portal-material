@@ -17,8 +17,6 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles, useTheme } from "@mui/styles";
 import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import Login from "../auth/Login";
 
 function ElevationScroll(props) {
@@ -136,11 +134,6 @@ export const Header = (props) => {
       name: "Subject",
       link: "/subjects",
       activeIndex: 2,
-    },
-    {
-      name: "Question",
-      link: "/questions",
-      activeIndex: 3,
     },
     {
       name: "Result",
@@ -307,7 +300,7 @@ export const Header = (props) => {
         <AppBar
           position="fixed"
           color="primary"
-          sx={{ zIndex: theme.zIndex.modal + 1 }}
+          sx={{ zIndex: theme.zIndex.app_bar }}
         >
           <Toolbar>
             <Button component={Link} to="/" className={classes.logo}>
@@ -323,7 +316,7 @@ export const Header = (props) => {
               onClose={handleClose}
               MenuListProps={{ onMouseLeave: handleClose }}
               keepMounted
-              style={{ zIndex: 1302 }}
+              style={{ zIndex: theme.zIndex.app_bar + 1 }}
               PaperProps={{
                 sx: {
                   elevation: 0,
@@ -361,7 +354,7 @@ export const Header = (props) => {
         onClose={() => setOpenLogin(false)}
         fullWidth
         sx={{
-          zIndex: 1302,
+          zIndex: theme.zIndex.app_bar+1,
         }}
       >
         <Login setOpenLogin={setOpenLogin} />

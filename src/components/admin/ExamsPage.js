@@ -321,7 +321,7 @@ const ExamsPage = (props) => {
         open={openDialog}
         onClose={handleClose}
         fullWidth
-        sx={{ zIndex: theme.zIndex.modal + 2 }}
+        sx={{ zIndex: theme.zIndex.modal }}
       >
         <DialogTitle>
           <Typography

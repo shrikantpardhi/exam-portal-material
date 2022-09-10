@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Grid, Box} from "@mui/material";
 import ExamCard from "./UI/Widgets/ExamCard";
 
-const ExamPage = (props) => {
+const ExamListPage = (props) => {
   let { name, id } = useParams();
   const theme = useTheme();
   const exams = [
@@ -75,4 +75,4 @@ const ExamPage = (props) => {
   );
 };
 
-export default ExamPage;
+export default ExamListPage;

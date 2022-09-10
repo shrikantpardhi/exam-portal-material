@@ -111,8 +111,8 @@ export const theme = createTheme({
       borderRadius: 2,
       p: 2,
     },
-    box: {
+    box:{
       borderRadius: 2,
-    },
+    }
   },
 });

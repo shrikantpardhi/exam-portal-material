@@ -52,19 +52,23 @@ function generate(element) {
 const ExamCard = (props) => {
   const theme = useTheme();
   const [open, setOpenDialog] = React.useState(false);
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [currentExam, setCurrentExam] = useState(null);
   const [agree, setAgree] = useState(true);
 
   const handleAgree = () => {
     setAgree(!agree);
   };
   const handleOpen = (exam) => () => {
-    setCurrentCategory(exam);
+    setCurrentExam(exam);
     setOpenDialog(true);
   };
 
   const handleClose = () => {
     setOpenDialog(false);
+  };
+  const handleStart = () => {
+    setOpenDialog(false);
+    window.open(`/exam`);
   };
   return (
     <>
@@ -146,16 +150,16 @@ const ExamCard = (props) => {
           </Typography>
         </DialogTitle>
         <DialogContent>
-            <List>
-              {generate(
-                <ListItem>
-                  <ListItemIcon>
-                    <ArrowRightIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Single-line item" />
-                </ListItem>
-              )}
-            </List>
+          <List>
+            {generate(
+              <ListItem>
+                <ListItemIcon>
+                  <ArrowRightIcon />
+                </ListItemIcon>
+                <ListItemText primary="Single-line item" />
+              </ListItem>
+            )}
+          </List>
         </DialogContent>
         <DialogActions>
           <Grid container direction="column" sx={{ ml: 2, mr: 2, mb: 1 }}>
@@ -171,8 +175,8 @@ const ExamCard = (props) => {
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleClose} disabled={agree}>
-                    Subscribe
+                  <Button onClick={handleStart} disabled={agree}>
+                    Start
                   </Button>
                 </Grid>
               </Grid>

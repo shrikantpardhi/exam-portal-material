@@ -1,40 +1,16 @@
-import React from "react";
+import React, { useRef } from "react";
 // import { Link } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, useTheme } from "@mui/styles";
 import { Grid, Typography } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import CssBaseline from "@mui/material/CssBaseline";
+import Paper from "@mui/material/Paper";
 
 const useStyle = makeStyles((theme) => ({
-  footer: {
-    backgroundColor: theme.palette.common.blue,
-    width: "100%",
-    // zIndex: 1302,
-    // display: "flex",
-    position: "relative",
-  },
-  link: {
-    color: "white",
-    fontFamily: "Arial",
-    fontSize: "0.75rem",
-    fontWeight: "bold",
-    textDecoration: "none",
-  },
-  gridItem: {
-    marginBootom: "1rem",
-    marginTop: "1rem",
-    paddingRight: "1em",
-    paddingLeft: "1em",
-  },
-  socialContainer: {
-    // position:"absolute",
-    marginTop: "1em",
-    paddingRight: "1em",
-    right: "1.5em",
-  },
   bottomText: {
     fontFamily: "Railway",
     textTransform: "none",
@@ -46,38 +22,45 @@ const useStyle = makeStyles((theme) => ({
 
 export default function Footer(props) {
   const classes = useStyle();
-
+  const ref = React.useRef(null);
+  const theme = useTheme();
   return (
-    <footer className={classes.footer}>
-      <Grid
-        container
-        justifyContent="center"
-        style={{ color: "white" }}
+    <>
+      <CssBaseline />
+      <Paper
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: theme.palette.common.blue,
+          pt: 1,
+          pb: 1,
+          pl: 2,
+          pr: 2,
+        }}
+        elevation={3}
       >
-        <Grid container justifyContent="space-between">
-          <Grid item className={classes.gridItem} xs={12} sm={12} md={6}>
+        <Grid
+          container
+          justifyContent="space-between"
+          style={{ color: "white" }}
+          direction="row"
+        >
+          <Grid item>
             <Typography className={classes.bottomText}>
               @2022 Exam Portal. All right reserved.
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12} md={6}>
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-end"
-              className={classes.socialContainer}
-            >
-              <Grid item >
-                <FacebookIcon />
-                <InstagramIcon />
-                <YouTubeIcon />
-                <TelegramIcon />
-                <TwitterIcon />
-              </Grid>
-            </Grid>
+          <Grid item>
+            <FacebookIcon />
+            <InstagramIcon />
+            <YouTubeIcon />
+            <TelegramIcon />
+            <TwitterIcon />
           </Grid>
         </Grid>
-      </Grid>
-    </footer>
+      </Paper>
+    </>
   );
 }
