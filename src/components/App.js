@@ -8,7 +8,7 @@ import LandingPage from "./LandingPage";
 import About from "./About";
 import { User } from "./admin/User";
 import ExamCategory from "./admin/ExamCategory";
-import ExamListPage from "./ExamListPage";
+import ExamPage from "./ExamPage";
 import ExamsPage from "./admin/ExamsPage";
 import Login from "./auth/Login";
 import QuestionPage from "./admin/QuestionPage";
@@ -40,7 +40,7 @@ function App() {
           <Route exact path="/questions" element={<div>questions</div>} />
           <Route exact path="/results" element={<div>results</div>} />
           <Route exact path="/categories" element={<ExamCategory />} />
-          <Route exact path="/category/:name/:id" element={<ExamListPage />} />
+          <Route exact path="/category/:name/:id" element={<ExamPage />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<div>contact</div>} />
           <Route exact path="/customers" element={<User />} />

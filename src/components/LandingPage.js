@@ -5,39 +5,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Divider from "@mui/material/Divider";
-import { ExamCategoryCard } from "./UI/Widgets/ExamCategoryCard";
-import SubjectCard from "./UI/Widgets/SubjectCard";
-
-const useStyle = makeStyles((theme) => ({
-  animation: {
-    maxWidth: "50em",
-    minWidth: "21em",
-    marginTop: "2em",
-    marginLeft: "10%",
-  },
-  cardMedia: {
-    height: 140,
-  },
-}));
+import { ExamCategory } from "./UI/Widgets/ExamCategory";
+import Subject from "./UI/Widgets/Subject";
+import { categories, subjects } from "../data";
 
 const LandingPage = (props) => {
-  const classes = useStyle();
   const theme = useTheme();
-  const categories = [
-    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
-    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
-    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
-    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
-    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
-  ];
-
-  const subjects = [
-    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
-    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
-    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
-    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
-    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
-  ];
 
   return (
     <Grid container direction="column" sx={{ marginBottom: "2em" }}>
@@ -104,9 +77,6 @@ const LandingPage = (props) => {
               </Button>
             </Grid>
           </Grid>
-          <Grid sm item className={classes.animation}>
-            {/* image animation lotte */}
-          </Grid>
         </Grid>
       </Grid>
       <Divider variant="middle" />
@@ -119,12 +89,13 @@ const LandingPage = (props) => {
               color: theme.palette.common.blue,
               fontWeight: 600,
               margin: "1rem",
+              pl: 1,
             }}
           >
-            Exam Category
+            Exam Categories
           </Typography>
         </Grid>
-        <ExamCategoryCard categories={categories} />
+        <ExamCategory />
       </Grid>
       {/* Subject List */}
       <Grid item>
@@ -135,12 +106,13 @@ const LandingPage = (props) => {
               color: theme.palette.common.blue,
               fontWeight: 600,
               margin: "1rem",
+              pl: 1,
             }}
           >
-            Exam Category
+            Subject
           </Typography>
         </Grid>
-        <SubjectCard subjects={subjects} />
+        <Subject subjects={subjects} />
       </Grid>
     </Grid>
   );
