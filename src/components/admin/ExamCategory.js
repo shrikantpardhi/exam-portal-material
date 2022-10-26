@@ -22,38 +22,17 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Formik } from "formik";
 import DialogTitle from "@mui/material/DialogTitle";
+import { categories } from "../../data";
 
 const ExamCategory = (props) => {
   const emptyCategory = { id: "", title: "" };
   const theme = useTheme();
-  const [categories, setCategories] = useState([
-    { id: 1, title: "SSC", premium: 0, totalCount: 15 },
-    { id: 2, title: "UPSC", premium: 0, totalCount: 5 },
-    { id: 3, title: "RBI", premium: 0, totalCount: 20 },
-    { id: 4, title: "RRB", premium: 0, totalCount: 25 },
-    { id: 5, title: "NEET", premium: 1, totalCount: 10 },
-  ]);
+  const [categories, setCategories] = useState(categories);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [currentCategory, setCurrentCategory] = useState(emptyCategory);
 
   const handleClickOpen = () => {
     setOpenDialog(true);
-  };
-
-  const handleSearchBox = (event) => {
-    let keyword = event.target.value;
-    const items = [...categories];
-    let newList = [];
-    items.forEach((item) => {
-      if (item.title.toUpperCase().includes(keyword.toUpperCase())) {
-        newList.push(item);
-      }
-    });
-    if (newList.length !== 0) {
-      setCategories(newList);
-    } else {
-      setCategories(...categories);
-    }
   };
 
   const handleClose = () => {

@@ -5,7 +5,7 @@ import { categories } from "../../../data";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import useRandomColor from "../../util/useRandomColor";
-import ExamCard from "../card/ExamCard";
+import SubjectCard from "../card/SubjectCard";
 
 export const ExamCategory = () => {
   const theme = useTheme();
@@ -81,7 +81,7 @@ export const ExamCategory = () => {
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={2}>
             {search(data).map((item) => (
-              <ExamCard item={item} />
+              <SubjectCard item={item} />
             ))}
           </Grid>
         </Box>

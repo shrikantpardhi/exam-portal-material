@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/styles";
 import { Grid, Box, Paper, IconButton, InputBase } from "@mui/material";
-import ExamCard from "../card/ExamCard";
+import SubjectCard from "../card/SubjectCard";
 import { subjects } from "../../../data";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -39,7 +39,6 @@ const Subject = (props) => {
     return <>loading...</>;
   } else {
     return (
-
       <Box sx={{ m: 3 }}>
         <Grid container direction="column">
           <Grid item sm>
@@ -72,7 +71,7 @@ const Subject = (props) => {
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={2}>
             {search(data).map((item) => (
-              <ExamCard item={item} />
+              <SubjectCard item={item} />
             ))}
           </Grid>
         </Box>
