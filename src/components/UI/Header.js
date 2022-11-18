@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles, useTheme } from "@mui/styles";
 import Dialog from "@mui/material/Dialog";
 import Login from "../auth/Login";
+import { userMenus, adminMenus, guestMenus, menuOptions } from "./Menus";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -88,6 +89,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const Header = (props) => {
   const classes = useStyles();
+  const isLoggedIn = useState(true);
+  const isUser = useState(true);
+  const isAdmin = useState(false);
+  const [menus, setMenus] = useState(userMenus);
+
+  // if (isLoggedIn && isUser) setMenus(userMenus);
+  // if (isLoggedIn && isAdmin) setMenus(adminMenus);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
@@ -102,60 +110,46 @@ export const Header = (props) => {
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const menuOptions = [
-    {
-      name: "Exams",
-      link: "/exams",
-      activeIndex: 1,
-      selectedIndex: 0,
-    },
-    {
-      name: "Exam Category",
-      link: "/categories",
-      activeIndex: 1,
-      selectedIndex: 1,
-    },
-  ];
-  const menus = [
-    {
-      name: "Home",
-      link: "/",
-      activeIndex: 0,
-    },
-    {
-      name: "Exams",
-      link: "/exams",
-      activeIndex: 1,
-      ariaOwns: anchorEl ? "exam-menu" : undefined,
-      ariaPopup: anchorEl ? "true" : undefined,
-      mouseOver: (event) => handleClick(event),
-    },
-    {
-      name: "Subject",
-      link: "/subjects",
-      activeIndex: 2,
-    },
-    {
-      name: "Result",
-      link: "/results",
-      activeIndex: 4,
-    },
-    {
-      name: "Customers",
-      link: "/customers",
-      activeIndex: 5,
-    },
-    {
-      name: "Profile",
-      link: "/profile",
-      activeIndex: 6,
-    },
-    {
-      name: "About Us",
-      link: "/about",
-      activeIndex: 7,
-    },
-  ];
+  // const menus = [
+  //   {
+  //     name: "Home",
+  //     link: "/",
+  //     activeIndex: 0,
+  //   },
+  //   {
+  //     name: "Exams",
+  //     link: "/exams",
+  //     activeIndex: 1,
+  //     ariaOwns: anchorEl ? "exam-menu" : undefined,
+  //     ariaPopup: anchorEl ? "true" : undefined,
+  //     mouseOver: (event) => handleClick(event),
+  //   },
+  //   {
+  //     name: "Subject",
+  //     link: "/subjects",
+  //     activeIndex: 2,
+  //   },
+  //   {
+  //     name: "Result",
+  //     link: "/results",
+  //     activeIndex: 4,
+  //   },
+  //   {
+  //     name: "Customers",
+  //     link: "/customers",
+  //     activeIndex: 5,
+  //   },
+  //   {
+  //     name: "Profile",
+  //     link: "/profile",
+  //     activeIndex: 6,
+  //   },
+  //   {
+  //     name: "About Us",
+  //     link: "/about",
+  //     activeIndex: 7,
+  //   },
+  // ];
 
   const handleChange = (e, newValue) => {
     props.setValue(newValue);
@@ -221,7 +215,7 @@ export const Header = (props) => {
             />
           );
         })}
-        <Tab label="Login" onClick={() => setOpenLogin(true)} />
+        {!isLoggedIn && <Tab label="Login" onClick={() => setOpenLogin(true)} />}
       </Tabs>
     </React.Fragment>
   );
@@ -354,7 +348,7 @@ export const Header = (props) => {
         onClose={() => setOpenLogin(false)}
         fullWidth
         sx={{
-          zIndex: theme.zIndex.app_bar+1,
+          zIndex: theme.zIndex.app_bar + 1,
         }}
       >
         <Login setOpenLogin={setOpenLogin} />

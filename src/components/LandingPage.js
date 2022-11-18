@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { makeStyles, useTheme } from "@mui/styles";
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -82,37 +82,12 @@ const LandingPage = (props) => {
       <Divider variant="middle" />
       {/* Exam List */}
       <Grid item>
-        <Grid sm item>
-          <Typography
-            variant="h5"
-            sx={{
-              color: theme.palette.common.blue,
-              fontWeight: 600,
-              margin: "1rem",
-              pl: 1,
-            }}
-          >
-            Exam Categories
-          </Typography>
-        </Grid>
         <ExamCategory />
       </Grid>
+      <Divider variant="middle" />
       {/* Subject List */}
       <Grid item>
-        <Grid sm item>
-          <Typography
-            variant="h5"
-            sx={{
-              color: theme.palette.common.blue,
-              fontWeight: 600,
-              margin: "1rem",
-              pl: 1,
-            }}
-          >
-            Subject
-          </Typography>
-        </Grid>
-        <Subject subjects={subjects} />
+        <Subject />
       </Grid>
     </Grid>
   );

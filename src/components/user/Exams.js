@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/styles";
-import {
-  Grid,
-  Box,
-  Paper,
-  IconButton,
-  InputBase,
-  Typography,
-} from "@mui/material";
-import SubjectCard from "../card/SubjectCard";
-import { subjects } from "../../../data";
+import { Grid, Box, Paper, InputBase, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import IconButton from "@mui/material/IconButton";
+import { exams } from "../../data";
+import ExamCard from "../UI/card/ExamCard";
 
-const Subject = (props) => {
+export const Exams = (props) => {
   const theme = useTheme();
   //added to filter cards
   const [error, setError] = useState(null);
@@ -24,14 +18,20 @@ const Subject = (props) => {
 
   useEffect(() => {
     setIsLoaded(true);
-    setItems(subjects);
+    setItems(exams);
   }, []);
 
   const data = Object.values(items);
 
   function search(items) {
     return items.filter((item) => {
-      if (filterParam == "All") {
+      if (item.title == filterParam) {
+        return searchParam.some((newItem) => {
+          return (
+            item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+          );
+        });
+      } else if (filterParam == "All") {
         return searchParam.some((newItem) => {
           return (
             item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
@@ -48,7 +48,7 @@ const Subject = (props) => {
   } else {
     return (
       <Box sx={{ m: 3 }}>
-        <Box sx={{ backgroundColor: theme.palette.background.lightGrey }}>
+        <Box>
           <Grid
             container
             justifyContent="space-between"
@@ -63,9 +63,7 @@ const Subject = (props) => {
                   color: theme.palette.common.blue,
                   fontWeight: 600,
                 }}
-              >
-                Subject
-              </Typography>
+              ></Typography>
             </Grid>
             <Grid item>
               <Paper
@@ -82,7 +80,7 @@ const Subject = (props) => {
                   <SearchIcon />
                 </IconButton>
                 <InputBase
-                  sx={{ flex: 1 }}
+                  sx={{ ml: 1, flex: 1 }}
                   placeholder="Search"
                   inputProps={{ "aria-label": "search" }}
                   name="search"
@@ -96,9 +94,11 @@ const Subject = (props) => {
         </Box>
         {/* exam cards */}
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
-          <Grid container spacing={2}>
-            {search(data).map((item) => (
-              <SubjectCard item={item} />
+          <Grid container spacing={1}>
+            {exams.map((exam) => (
+              <Grid item key={exam.examId} xs = {6} sm = {4} md = {3} lg = {3} >
+                <ExamCard exam={exam} />
+              </Grid>
             ))}
           </Grid>
         </Box>
@@ -106,5 +106,3 @@ const Subject = (props) => {
     );
   }
 };
-
-export default Subject;

@@ -20,6 +20,7 @@ export const theme = createTheme({
       headingBox: "#d1e6e5",
       body: "#d1e6e5",
       detailBox: "#ae9ae9",
+      lightGrey: "#EEEEEE",
     },
     white: {
       main: "#ffffff",
@@ -111,8 +112,8 @@ export const theme = createTheme({
       borderRadius: 2,
       p: 2,
     },
-    box:{
+    box: {
       borderRadius: 2,
-    }
+    },
   },
 });

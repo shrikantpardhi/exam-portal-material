@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@mui/styles";
-import { Grid, Box, Paper, InputBase } from "@mui/material";
+import { Grid, Box, Paper, InputBase, Typography } from "@mui/material";
 import { categories } from "../../../data";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import useRandomColor from "../../util/useRandomColor";
-import SubjectCard from "../card/SubjectCard";
+import { ExamCategoryCard } from "../card/ExamCategoryCard";
 
 export const ExamCategory = () => {
   const theme = useTheme();
@@ -50,38 +50,57 @@ export const ExamCategory = () => {
   } else {
     return (
       <Box sx={{ m: 3 }}>
-        <Grid container direction="column">
-          <Grid item sm>
-            <Paper
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "center",
-                width: 400,
-                heigth: 60,
-              }}
-            >
-              <IconButton sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search"
-                inputProps={{ "aria-label": "search" }}
-                name="search"
-                id="search"
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-              />
-            </Paper>
+        <Box sx={{ backgroundColor: theme.palette.background.lightGrey }}>
+          <Grid
+            container
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ p: 1 }}
+            spacing={1}
+          >
+            <Grid item>
+              <Typography
+                variant="h5"
+                sx={{
+                  color: theme.palette.common.blue,
+                  fontWeight: 600,
+                }}
+              >
+                Exam Categories
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: 400,
+                  heigth: 60,
+                }}
+              >
+                <IconButton sx={{ p: "10px" }} aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search"
+                  inputProps={{ "aria-label": "search" }}
+                  name="search"
+                  id="search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                />
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
         {/* exam cards */}
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={2}>
             {search(data).map((item) => (
-              <SubjectCard item={item} />
+              <ExamCategoryCard item={item} />
             ))}
           </Grid>
         </Box>

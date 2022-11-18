@@ -52,7 +52,7 @@ export const exams = [
     examDescription: null,
     examDuration: 60,
     examEndDate: "2017-01-25",
-    examTitle: "UPSC",
+    examTitle: "Exam 02",
     isNegativeAllowed: 0,
     isPaid: 0,
     totalMark: 100,
