@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Grid, Box, Button } from "@mui/material";
 import ExamCard from "./UI/card/ExamCard";
 import { exams } from "../data";
+import HeadTitleSection from "./UI/Widgets/HeadTitleSection";
 
 const ExamPage = (props) => {
   let { name, id } = useParams();
@@ -20,24 +21,7 @@ const ExamPage = (props) => {
         flexGrow: 1,
       }}
     >
-      <Box sx={{ backgroundColor: theme.palette.background.headingBox }}>
-        <Grid
-          container
-          justifyContent="space-between"
-          sx={{ p: 1, marginBottom: 3 }}
-        >
-          <Grid item>
-            <Typography sx={{ ...theme.typography.h5 }}>
-              {name}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Button variant="text" onClick={() => navigate(-1)} size="small">
-              Back
-            </Button>
-          </Grid>
-        </Grid>
-      </Box>
+      <HeadTitleSection name={name} />
 
       <Grid container spacing={1}>
         {exams.map((exam) => (

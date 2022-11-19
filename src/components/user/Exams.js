@@ -100,11 +100,6 @@ export const Exams = (props) => {
                 <ExamCard exam={exam} />
               </Grid>
             ))}
-            {/* {exams.map((exam) => (
-              <Grid item key={exam.examId} xs={12} sm={6} md={3} lg={3}>
-                <ExamCard exam={exam} />
-              </Grid>
-            ))} */}
           </Grid>
         </Box>
       </Box>

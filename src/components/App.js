@@ -12,6 +12,8 @@ import QuestionPage from "./admin/QuestionPage";
 import Exam from "./Exam";
 import { HomeTemplate } from "./HomeTemplate";
 import {Exams as UserExam} from "./user/Exams";
+import Results from "./user/Results";
+import  Result  from "./user/Result";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -39,7 +41,8 @@ function App() {
 
             {/* User Links */}
             <Route exact path="/exams" element={<UserExam />} />
-            <Route exact path="/results" element={<div>contact</div>} />
+            <Route exact path="/results" element={<Results />} />
+            <Route exact path="/result/:name/:id" element={<Result />} />
             <Route path="/exam/:name/:id" element={<ExamPage />} />
 
             {/* Admin Links */}
