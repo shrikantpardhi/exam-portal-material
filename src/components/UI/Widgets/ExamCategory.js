@@ -96,7 +96,7 @@ export const ExamCategory = () => {
             </Grid>
           </Grid>
         </Box>
-        {/* exam cards */}
+        {/* exam category cards */}
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={2}>
             {search(data).map((item) => (

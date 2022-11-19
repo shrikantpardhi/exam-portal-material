@@ -13,7 +13,7 @@ export const Exams = (props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [q, setQ] = useState("");
-  const [searchParam] = useState(["title", "premium"]);
+  const [searchParam] = useState(["examTitle"]);
   const [filterParam, setFilterParam] = useState(["All"]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const Exams = (props) => {
 
   function search(items) {
     return items.filter((item) => {
-      if (item.title == filterParam) {
+      if (item.examTitle == filterParam) {
         return searchParam.some((newItem) => {
           return (
             item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
@@ -95,11 +95,16 @@ export const Exams = (props) => {
         {/* exam cards */}
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={1}>
-            {exams.map((exam) => (
-              <Grid item key={exam.examId} xs = {6} sm = {4} md = {3} lg = {3} >
+            {search(data).map((exam) => (
+              <Grid item key={exam.examId} xs={12} sm={6} md={3} lg={3}>
                 <ExamCard exam={exam} />
               </Grid>
             ))}
+            {/* {exams.map((exam) => (
+              <Grid item key={exam.examId} xs={12} sm={6} md={3} lg={3}>
+                <ExamCard exam={exam} />
+              </Grid>
+            ))} */}
           </Grid>
         </Box>
       </Box>

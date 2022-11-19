@@ -55,7 +55,7 @@ export const ExamCategoryCard = (props) => {
                   sx={{ p: 1 }}
                 >
                   <Grid item>Type</Grid>
-                  <Grid item>{item.premium === 0 ? "Free" : "Paid"}</Grid>
+                  <Grid item>{item.premium === false ? "Free" : "Paid"}</Grid>
                 </Grid>
               </Grid>
             </Grid>
