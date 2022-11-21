@@ -21,9 +21,8 @@ export const theme = createTheme({
       body: "#d1e6e5",
       detailBox: "#ae9ae9",
       lightGrey: "#EEEEEE",
-    },
-    white: {
-      main: "#ffffff",
+      red: "#fc5d5d",
+      green: "#62f069",
     },
     divider: {
       light: "#ffffff",

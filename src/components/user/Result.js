@@ -27,7 +27,7 @@ const ResultHeadSection = (props) => {
   const { result } = props;
   return (
     <Grid container direction="row" justifyContent="space-between" spacing={1}>
-      <Grid item sm>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box
           sx={{
             ...theme.shape.box,
@@ -54,7 +54,7 @@ const ResultHeadSection = (props) => {
           </Grid>
         </Box>
       </Grid>
-      <Grid item sm>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box
           sx={{
             ...theme.shape.box,
@@ -85,7 +85,7 @@ const ResultHeadSection = (props) => {
           </Grid>
         </Box>
       </Grid>
-      <Grid item sm>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box
           sx={{
             ...theme.shape.box,
@@ -104,7 +104,7 @@ const ResultHeadSection = (props) => {
           </Grid>
         </Box>
       </Grid>
-      <Grid item sm>
+      <Grid item xs={12} sm={6} md={4} lg={3}>
         <Box
           sx={{
             ...theme.shape.box,
@@ -140,13 +140,77 @@ const ResultHeadSection = (props) => {
 };
 
 const ResultQuestionAnswerSection = (props) => {
+  const theme = useTheme();
   return (
-    <Grid container direction="column" spacing={1} sx={{p:1}}>
+    <Grid container direction="column" spacing={1} sx={{ p: 1 }}>
       <Grid item>
-        <Typography variant="subtitle2">
-          <span>Q. </span>
-          Question Title
-        </Typography>
+        <Box
+          sx={{ p: 1, border: `2px solid ${theme.palette.background.body}` }}
+        >
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            spacing={1}
+          >
+            <Grid item sx={12} sm={12} md={9} lg={10}>
+              <Typography variant="subtitle2">
+                <span>Q. </span>
+                Question Title
+              </Typography>
+            </Grid>
+            <Grid item sx={12} sm={12} md={3} lg={2}>
+              <Box
+                sx={{
+                  backgroundColor: theme.palette.background.green,
+                  justifyContent: "center",
+                }}
+              >
+                <Typography
+                  color={theme.typography.color.white}
+                  sx={{ p: 1, fontWeight: "600", fontSize: "1.25rem" }}
+                >
+                  <span>-&nbsp;0.33</span>
+                  <span>&nbsp;/&nbsp;</span>
+                  <span>1</span>
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
+      <Grid item>
+        <Grid container direction="row" spacing={1}>
+          <Grid item sx={12} sm={12} md={6} lg={6}>
+            <Box
+              sx={{
+                border: `2px solid ${theme.palette.background.body}`,
+              }}
+            >
+              <Typography variant="body2" sx={{ p: 1 }}>
+                Correct Answer
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item sx={12} sm={12} md={6} lg={6}>
+            <Box
+              sx={{
+                border: `2px solid ${theme.palette.background.body}`,
+              }}
+            >
+              <Typography variant="body2" sx={{ p: 1 }}>
+                Selected Answer
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        <Box sx={{ border: `2px solid ${theme.palette.background.body}` }}>
+          <Typography variant="body2" sx={{ p: 1 }}>
+            This is answer description.
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   );
@@ -156,17 +220,32 @@ const ResultBodySection = (props) => {
   const theme = useTheme();
   const { result } = props;
   return (
-    <Grid container direction="column" spacing={1} sx={{ p: 1 }}>
-      {result.resultJsonDataList.map((item) => {
-        return (
-          <Box sx={{m:1, border: `4px solid ${theme.palette.background.lightGrey}` }}>
-            <Grid item key={item.seqId}>
-              <ResultQuestionAnswerSection item={item} />
-            </Grid>
-          </Box>
-        );
-      })}
-    </Grid>
+    <Box
+      sx={{
+        mt: 1,
+        mb: 4,
+        p: 1,
+        background: theme.palette.background.body,
+      }}
+    >
+      <Grid container direction="column" spacing={1} sx={{ p: 1 }}>
+        {result.resultJsonDataList.map((item) => {
+          return (
+            <Box
+              sx={{
+                m: 0.5,
+                backgroundColor: theme.palette.background.lightGrey,
+                /*border: `4px solid ${theme.palette.background.lightGrey}` */
+              }}
+            >
+              <Grid item key={item.seqId}>
+                <ResultQuestionAnswerSection item={item} />
+              </Grid>
+            </Box>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 };
 
@@ -186,30 +265,21 @@ const Result = (props) => {
           ...theme.shape.box,
           mt: 1,
           mb: 1,
-          background: theme.palette.background.lightGrey,
+          background: theme.palette.background.headingBox,
         }}
       >
         <Typography
           variant="subtitle2"
           align="center"
-          sx={{ p: 1, color: theme.palette.secondary }}
+          color="primary"
+          sx={{ p: 1 }}
         >
           Result Details
         </Typography>
       </Box>
 
       {/* result body section */}
-      <Box
-        sx={{
-          mt: 1,
-          mb: 1,
-          p: 1,
-          background: theme.palette.background.body,
-        }}
-      >
-        {/* hahahah */}
-        <ResultBodySection result={result} />
-      </Box>
+      <ResultBodySection result={result} />
     </Box>
   );
 };
