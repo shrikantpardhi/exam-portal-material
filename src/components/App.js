@@ -14,6 +14,7 @@ import { HomeTemplate } from "./HomeTemplate";
 import {Exams as UserExam} from "./user/Exams";
 import Results from "./user/Results";
 import  Result  from "./user/Result";
+import Profile from "./Profile";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,7 +38,7 @@ function App() {
             <Route index path="/" element={<LandingPage />} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/contact" element={<div>contact</div>} />
-            <Route exact path="/profile" element={<div>profile</div>} />
+            <Route exact path="/profile" element={<Profile />} />
 
             {/* User Links */}
             <Route exact path="/exams" element={<UserExam />} />
