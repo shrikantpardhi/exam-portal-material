@@ -181,3 +181,23 @@ export const results = [
     ],
   },
 ];
+
+export const user = {
+  userName: "sdhfkjfhsdkf",
+  firstName: "Shri",
+  lastName: "Pardhi",
+  email: "shripardhi@gmail.com",
+  mobile: "8975307295",
+  address: "Address hai",
+  image: "abc.jpg",
+  city: "Nagpur",
+  state: "Maharashtra",
+  education: "Degree",
+  status: true,
+  role: [
+    {
+      roleName: "User",
+      roleDescription: "User",
+    },
+  ],
+};
