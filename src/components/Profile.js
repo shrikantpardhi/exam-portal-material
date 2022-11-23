@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { user } from "../data";
+import ChangePasswordForm from "./UI/frorms/ChangePasswordForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +56,8 @@ const RowItem = (props) => {
       <Box
         sx={{
           ...theme.shape.box,
-          backgroundColor: theme.palette.background.lightGrey, justifyContent:"flex-start"
+          backgroundColor: theme.palette.common.white,
+          justifyContent: "flex-start",
         }}
       >
         <Grid
@@ -66,13 +68,16 @@ const RowItem = (props) => {
           sx={{ m: 1 }}
         >
           <Grid item>
-            <Typography variant="body1">
+            <Typography variant="body1" align="center">
               {name}
               <span>:</span>
             </Typography>
           </Grid>
           <Grid item>
-            <Typography sx={{ fontWeight: "800", fontSize: "1.25rem" }}>
+            <Typography
+              align="center"
+              sx={{ fontWeight: "600", fontSize: "1.25rem" }}
+            >
               {value}
             </Typography>
           </Grid>
@@ -108,6 +113,18 @@ const PersonalDetails = (props) => {
   );
 };
 
+const ChangePassword = (props) => {
+    const theme = useTheme();
+    return <Box component="form"
+      sx={{
+        m: 1,
+      }}
+      noValidate
+      autoComplete="off">
+        <ChangePasswordForm user={props.user} />
+      </Box>
+}
+
 const Profile = (props) => {
   const theme = useTheme();
 
@@ -135,9 +152,9 @@ const Profile = (props) => {
         sx={{
           borderRight: 1,
           borderColor: "divider",
-          width: "20%",
+          width: "25%",
           justifyContent: "flex-end",
-          alignItems: "flex-end",
+          alignItems: "center",
         }}
       >
         <Avatar
@@ -164,6 +181,8 @@ const Profile = (props) => {
         />
       </Tabs>
       {/* section */}
+      <Box sx={{backgroundColor:theme.palette.background.body}}>
+
       <TabPanel value={value} index={0}>
         <PersonalDetails user={cuser} />
       </TabPanel>
@@ -171,11 +190,12 @@ const Profile = (props) => {
         <PersonalDetails user={cuser} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <PersonalDetails user={cuser} />
+        <ChangePassword user={cuser} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <PersonalDetails user={cuser} />
       </TabPanel>
+      </Box>
     </Box>
   );
 };
