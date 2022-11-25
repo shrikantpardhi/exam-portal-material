@@ -7,13 +7,17 @@ import {
   Grid,
   Box,
   Typography,
-  Button,
+  useMediaQuery,
+  Stack,
   Divider,
-  TextField,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { user } from "../data";
 import ChangePasswordForm from "./UI/frorms/ChangePasswordForm";
+import EmailIcon from "@mui/icons-material/Email";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PersonIcon from "@mui/icons-material/Person";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,15 +26,11 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -43,8 +43,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
@@ -52,37 +52,30 @@ const RowItem = (props) => {
   let { name, value } = props;
   const theme = useTheme();
   return (
-    <Grid item sx={12} xs={12} md={6} lg={6}>
-      <Box
-        sx={{
-          ...theme.shape.box,
-          backgroundColor: theme.palette.common.white,
-          justifyContent: "flex-start",
-        }}
+    <Grid item xs sm md={6} lg={6}>
+      <Grid
+        container
+        direction="row"
+        spacing={1}
+        justifyContent="flex-start"
+        alignItems="center"
+        sx={{ m: 1 }}
       >
-        <Grid
-          container
-          direction="row"
-          spacing={2}
-          alignItems="center"
-          sx={{ m: 1 }}
-        >
-          <Grid item>
-            <Typography variant="body1" align="center">
-              {name}
-              <span>:</span>
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              align="center"
-              sx={{ fontWeight: "600", fontSize: "1.25rem" }}
-            >
-              {value}
-            </Typography>
-          </Grid>
+        <Grid item>
+          <Typography variant="body1" align="center">
+            {name}
+            <span>:</span>
+          </Typography>
         </Grid>
-      </Box>
+        <Grid item>
+          <Typography
+            align="center"
+            sx={{ fontWeight: "600", fontSize: "1rem" }}
+          >
+            {value}
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
@@ -92,42 +85,86 @@ const PersonalDetails = (props) => {
 
   return (
     <Box
-      component="form"
       sx={{
         m: 1,
       }}
-      noValidate
-      autoComplete="off"
     >
-      <Grid container spacing={1}>
-        <RowItem name="First Name" value={props.user.firstName} />
-        <RowItem name="Last Name" value={props.user.lastName} />
-        <RowItem name="Email ID" value={props.user.email} />
-        <RowItem name="Mobile" value={props.user.mobile} />
-        <RowItem name="Address" value={props.user.address} />
-        <RowItem name="City" value={props.user.city} />
-        <RowItem name="State" value={props.user.state} />
-        <RowItem name="Education" value={props.user.education} />
+      <Grid container justifyContent="space-between" direction="row" spacing={2}>
+        <Grid item sm>
+          <Grid container direction="column" spacing={1} justifyContent="flex-start">
+            <Grid item sm>
+              <Avatar
+                alt={props.user.firstName}
+                //   src="/static/images/avatar/1.jpg"
+                sx={{ width: 150, height: 150, mb: 1 }}
+              >
+                <Typography variant="h4" color="secondary">
+                  {props.user.firstName.substring(0, 1)}
+                  {props.user.lastName.substring(0, 1)}
+                </Typography>
+              </Avatar>
+            </Grid>
+            <Grid item sm>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <PersonIcon />
+                <Typography variant="h5">
+                  {props.user.firstName}&nbsp;{props.user.lastName}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item sm>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <EmailIcon />
+                <Typography variant="body1">{props.user.email}</Typography>
+              </Stack>
+            </Grid>
+            <Grid item sm>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <PhoneIcon />
+                <Typography>{props.user.mobile}</Typography>
+              </Stack>
+            </Grid>
+            <Grid item sm>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <LocationOnIcon />
+                <Typography>{props.user.city}</Typography>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Grid>
+        
+        <Grid item sm>
+          <Grid container direction="column" spacing={1}>
+            <RowItem name="Address" value={props.user.address} />
+            <RowItem name="State" value={props.user.state} />
+            <RowItem name="Education" value={props.user.education} />
+          </Grid>
+        </Grid>
       </Grid>
     </Box>
   );
 };
 
 const ChangePassword = (props) => {
-    const theme = useTheme();
-    return <Box component="form"
+  const theme = useTheme();
+  return (
+    <Box
+      component="form"
       sx={{
         m: 1,
+        justifyContent: "center",
       }}
       noValidate
-      autoComplete="off">
-        <ChangePasswordForm user={props.user} />
-      </Box>
-}
+      autoComplete="off"
+    >
+      <ChangePasswordForm user={props.user} />
+    </Box>
+  );
+};
 
 const Profile = (props) => {
   const theme = useTheme();
-
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = React.useState(0);
   const [cuser, setUser] = React.useState(user);
 
@@ -138,63 +175,26 @@ const Profile = (props) => {
     <Box
       sx={{
         m: 3,
-        flexGrow: 1,
-        display: "flex",
       }}
     >
       {/* tabs */}
       <Tabs
-        orientation="vertical"
-        variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{
-          borderRight: 1,
-          borderColor: "divider",
-          width: "25%",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
+        textColor="secondary"
+        indicatorColor="secondary"
       >
-        <Avatar
-          alt="Remy Sharp"
-          //   src="/static/images/avatar/1.jpg"
-          sx={{ width: 150, height: 150, right: 0, mb: 1 }}
-        >
-          SP
-        </Avatar>
-        <Tab
-          label="Personal"
-          {...a11yProps(0)}
-          sx={{ justifyContent: "flex-end" }}
-        />
-        <Tab
-          label="Change Password"
-          {...a11yProps(1)}
-          sx={{ justifyContent: "flex-end" }}
-        />
-        <Tab
-          label="Log Out"
-          {...a11yProps(2)}
-          sx={{ justifyContent: "flex-end" }}
-        />
+        <Tab label="Personal" {...a11yProps(0)} />
+        <Tab label="Change Password" {...a11yProps(1)} />
       </Tabs>
       {/* section */}
-      <Box sx={{backgroundColor:theme.palette.background.body}}>
-
-      <TabPanel value={value} index={0}>
-        <PersonalDetails user={cuser} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <PersonalDetails user={cuser} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ChangePassword user={cuser} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <PersonalDetails user={cuser} />
-      </TabPanel>
+      <Box sx={{ backgroundColor: theme.palette.background.body }}>
+        <TabPanel value={value} index={0}>
+          <PersonalDetails user={cuser} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <ChangePassword user={cuser} />
+        </TabPanel>
       </Box>
     </Box>
   );

@@ -31,7 +31,7 @@ const ChangePasswordForm = (props) => {
   };
 
   return (
-    <Box sx={{ m: 1 }}>
+    <Box sx={{ m: 1, justifyContent: "center" }}>
       <Formik
         initialValues={{
           currentPassword: "",
@@ -45,19 +45,21 @@ const ChangePasswordForm = (props) => {
             .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
             .required("Required"),
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {try {
-          if (scriptedRef.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+          try {
+            if (scriptedRef.current) {
+              setStatus({ success: true });
+              setSubmitting(false);
+            }
+          } catch (err) {
+            console.error(err);
+            if (scriptedRef.current) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
+              setSubmitting(false);
+            }
           }
-        } catch (err) {
-          console.error(err);
-          if (scriptedRef.current) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-            setSubmitting(false);
-          }
-        }}}
+        }}
       >
         {({
           errors,
@@ -69,152 +71,138 @@ const ChangePasswordForm = (props) => {
           values,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <Grid container direction="row" spacing={2}>
-                  <Grid item sm>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(
-                        touched.currentPassword && errors.currentPassword
-                      )}
-                      sx={{ ...theme.typography.customInput }}
-                    >
-                      <InputLabel htmlFor="outlined-adornment-password-login">
-                        Current Password
-                      </InputLabel>
-                      <OutlinedInput
-                        id="outlined-adornment-password-login"
-                        type={showPassword ? "text" : "password"}
-                        value={values.currentPassword}
-                        name="currentPassword"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                              size="large"
-                            >
-                              {showPassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Current Password"
-                        inputProps={{}}
-                      />
-                      {touched.currentPassword && errors.currentPassword && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-text-password-login"
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              spacing={1}
+            >
+              <Grid item sm>
+                <FormControl
+                  error={Boolean(
+                    touched.currentPassword && errors.currentPassword
+                  )}
+                  sx={{ ...theme.typography.customInput }}
+                >
+                  <InputLabel htmlFor="outlined-adornment-password-login">
+                    Current Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-login"
+                    type={showPassword ? "text" : "password"}
+                    value={values.currentPassword}
+                    name="currentPassword"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
                         >
-                          {errors.currentPassword}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item sm>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(touched.newPassword && errors.newPassword)}
-                      sx={{ ...theme.typography.customInput }}
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Current Password"
+                    inputProps={{}}
+                  />
+                  {touched.currentPassword && errors.currentPassword && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-text-password-login"
                     >
-                      <InputLabel htmlFor="outlined-adornment-password-login">
-                        New Password
-                      </InputLabel>
-                      <OutlinedInput
-                        id="outlined-adornment-password-login"
-                        type={showPassword ? "text" : "password"}
-                        value={values.password}
-                        name="newPassword"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                              size="large"
-                            >
-                              {showPassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="New Password"
-                        inputProps={{}}
-                      />
-                      {touched.newPassword && errors.newPassword && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-text-password-login"
+                      {errors.currentPassword}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item sm>
+                <FormControl
+                  error={Boolean(touched.newPassword && errors.newPassword)}
+                  sx={{ ...theme.typography.customInput }}
+                >
+                  <InputLabel htmlFor="outlined-adornment-password-login">
+                    New Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-login"
+                    type={showPassword ? "text" : "password"}
+                    value={values.password}
+                    name="newPassword"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
                         >
-                          {errors.newPassword}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item sm>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(
-                        touched.cnfNewPassword && errors.cnfNewPassword
-                      )}
-                      sx={{ ...theme.typography.customInput }}
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="New Password"
+                    inputProps={{}}
+                  />
+                  {touched.newPassword && errors.newPassword && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-text-password-login"
                     >
-                      <InputLabel htmlFor="outlined-adornment-password-login">
-                        Confirm Password
-                      </InputLabel>
-                      <OutlinedInput
-                        id="outlined-adornment-password-login"
-                        type={showPassword ? "text" : "password"}
-                        value={values.cnfNewPassword}
-                        name="cnfNewPassword"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                              size="large"
-                            >
-                              {showPassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                        label="Confirm Password"
-                        inputProps={{}}
-                      />
-                      {touched.cnfNewPassword && errors.cnfNewPassword && (
-                        <FormHelperText
-                          error
-                          id="standard-weight-helper-text-password-login"
+                      {errors.newPassword}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+              <Grid item sm>
+                <FormControl
+                  error={Boolean(
+                    touched.cnfNewPassword && errors.cnfNewPassword
+                  )}
+                  sx={{ ...theme.typography.customInput }}
+                >
+                  <InputLabel htmlFor="outlined-adornment-password-login">
+                    Confirm Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-login"
+                    type={showPassword ? "text" : "password"}
+                    value={values.cnfNewPassword}
+                    name="cnfNewPassword"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
                         >
-                          {errors.cnfNewPassword}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                </Grid>
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Confirm Password"
+                    inputProps={{}}
+                  />
+                  {touched.cnfNewPassword && errors.cnfNewPassword && (
+                    <FormHelperText
+                      error
+                      id="standard-weight-helper-text-password-login"
+                    >
+                      {errors.cnfNewPassword}
+                    </FormHelperText>
+                  )}
+                </FormControl>
               </Grid>
               <Grid item sm>
                 <Box sx={{ justifyContent: "flex-end" }}>
