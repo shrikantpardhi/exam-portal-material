@@ -89,9 +89,14 @@ const PersonalDetails = (props) => {
         m: 1,
       }}
     >
-      <Grid container justifyContent="space-between" direction="row" spacing={2}>
+      <Grid container justifyContent="center" direction="row" spacing={2}>
         <Grid item sm md={4} lg={4}>
-          <Grid container direction="column" spacing={1} justifyContent="flex-start">
+          <Grid
+            container
+            direction="column"
+            spacing={1}
+            justifyContent="flex-start"
+          >
             <Grid item sm>
               <Avatar
                 alt={props.user.firstName}
@@ -132,7 +137,7 @@ const PersonalDetails = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        
+
         <Grid item sm md={8} lg={8}>
           <Grid container direction="column" spacing={1}>
             <RowItem name="Address" value={props.user.address} />
@@ -149,13 +154,10 @@ const ChangePassword = (props) => {
   const theme = useTheme();
   return (
     <Box
-      component="form"
       sx={{
         m: 1,
         justifyContent: "center",
       }}
-      noValidate
-      autoComplete="off"
     >
       <ChangePasswordForm user={props.user} />
     </Box>
@@ -188,7 +190,13 @@ const Profile = (props) => {
         <Tab label="Change Password" {...a11yProps(1)} />
       </Tabs>
       {/* section */}
-      <Box sx={{ backgroundColor: theme.palette.background.body }}>
+      <Box
+        sx={{
+          backgroundColor: theme.palette.background.body,
+          justify: "center",
+          justifyContent: "center",
+        }}
+      >
         <TabPanel value={value} index={0}>
           <PersonalDetails user={cuser} />
         </TabPanel>
