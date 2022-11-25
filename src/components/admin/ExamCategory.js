@@ -22,15 +22,16 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Formik } from "formik";
 import DialogTitle from "@mui/material/DialogTitle";
-import { categories } from "../../data";
+import { categories as ccategories } from "../../data";
 
 const ExamCategory = (props) => {
   const emptyCategory = { id: "", title: "" };
   const theme = useTheme();
-  const [categories, setCategories] = useState(categories);
+  const [categories, setCategories] = useState(ccategories);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [currentCategory, setCurrentCategory] = useState(emptyCategory);
 
+  console.log(JSON.stringify(categories));
   const handleClickOpen = () => {
     setOpenDialog(true);
   };
@@ -55,61 +56,41 @@ const ExamCategory = (props) => {
         width: "auto",
         height: "auto",
         flexGrow: 1,
-        // backgroundColor: "primary.dark",
-        // "&:hover": {
-        //   backgroundColor: "primary.main",
-        //   opacity: [0.9, 0.8, 0.7],
-        // },
       }}
     >
-      <Grid
-        container
-        spacing={2}
-        justifyContent="space-between"
-        direction="row"
+      <Box
+        sx={{
+          p: 1,
+          backgroundColor: theme.palette.background.headingBox,
+        }}
       >
-        <Grid item>
-          <Grid container spacing={2} sx={{ marginBottom: 2 }}>
-            <Grid item>
-              <Typography sx={{ ...theme.typography.h5 }}>
-                Exam Category
-              </Typography>
-            </Grid>
-            <Grid item>
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                fullWidth
-                placeholder="Search here..."
-                // onChange={handleSearchBox}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                size="small"
-              />
-            </Grid>
+        <Grid
+          container
+          justifyContent="space-between"
+          direction="row"
+        >
+          <Grid item>
+            <Typography sx={{ ...theme.typography.h5 }}>
+              Exam Category
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              onClick={handleClickOpen}
+              startIcon={<AddIcon />}
+              size="small"
+            >
+              Add Category
+            </Button>
           </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            onClick={handleClickOpen}
-            startIcon={<AddIcon />}
-            size="small"
-          >
-            Add Category
-          </Button>
-        </Grid>
-      </Grid>
+      </Box>
 
       <Box sx={{ m: 1 }}>
         <Grid container spacing={2}>
           {categories.map((category) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
+            <Grid item xs sm={6} md={4} lg={3} key={category.id}>
               <Card
                 variant="outlined"
                 sx={{
@@ -125,7 +106,7 @@ const ExamCategory = (props) => {
                     color="text.secondary"
                     gutterBottom
                   >
-                    {category.premium === 0 ? "Free" : "Paid"}
+                    {category.premium ? "Free" : "Paid"}
                   </Typography>
                   <Typography
                     sx={{ ...theme.typography.cardTitle, marginBottom: "1em" }}

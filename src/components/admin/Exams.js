@@ -29,7 +29,7 @@ import { categories, subjects, exams } from "../../data";
 
 const label = { inputProps: { "aria-label": "Swich User State" } };
 
-const ExamsPage = (props) => {
+export const Exams = (props) => {
   const initialExam = {
     examId: "",
     created: null,
@@ -595,4 +595,3 @@ const ExamsPage = (props) => {
   );
 };
 
-export default ExamsPage;

@@ -4,17 +4,18 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { theme } from "./UI/Theme";
 import LandingPage from "./LandingPage";
 import About from "./About";
-import { User } from "./admin/User";
-import ExamCategory from "./admin/ExamCategory";
 import ExamPage from "./ExamPage";
-import ExamsPage from "./admin/ExamsPage";
-import QuestionPage from "./admin/QuestionPage";
 import Exam from "./Exam";
 import { HomeTemplate } from "./HomeTemplate";
 import {Exams as UserExam} from "./user/Exams";
 import Results from "./user/Results";
 import  Result  from "./user/Result";
 import Profile from "./Profile";
+//admin imports
+import { Users } from "./admin/Users";
+import ExamCategory from "./admin/ExamCategory";
+import {Exams as AdminExam} from "./admin/Exams";
+import QuestionPage from "./admin/QuestionPage";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,17 +48,17 @@ function App() {
             <Route path="/exam/:name/:id" element={<ExamPage />} />
 
             {/* Admin Links */}
-            <Route exact path="/admin/exams" element={<ExamsPage />} />
+            <Route exact path="/admin/exams" element={<AdminExam />} />
+            <Route exact path="/admin/categories" element={<ExamCategory />} />
+            <Route exact path="/admin/subjects" element={<div>subjects</div>} />
+            <Route exact path="/admin/users" element={<Users />} />
             <Route
               exact
               path="/admin/exam/:name/:id"
               element={<QuestionPage />}
             />
-            <Route exact path="/subjects" element={<div>subjects</div>} />
             <Route exact path="/questions" element={<div>questions</div>} />
-            <Route exact path="/categories" element={<ExamCategory />} />
             <Route exact path="/category/:name/:id" element={<ExamPage />} />
-            <Route exact path="/customers" element={<User />} />
           </Route>
           <Route exact path="/exam/start/:name/:id" element={<Exam />} />
         </Routes>

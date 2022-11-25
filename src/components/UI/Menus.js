@@ -41,19 +41,29 @@ export const adminMenus = [
     activeIndex: 1,
   },
   {
+    name: "Exam Category",
+    link: "/admin/categories",
+    activeIndex: 2,
+  },
+  {
     name: "Subject",
     link: "/admin/subjects",
-    activeIndex: 2,
+    activeIndex: 3,
+  },
+  {
+    name: "Users",
+    link: "/admin/users",
+    activeIndex: 4,
   },
   {
     name: "Profile",
     link: "/profile",
-    activeIndex: 3,
+    activeIndex: 5,
   },
   {
     name: "Log Out",
     link: "/logout",
-    activeIndex: 4,
+    activeIndex: 6,
   },
 ];
 

@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 
 const label = { inputProps: { "aria-label": "Swich User State" } };
 
-export const User = (props) => {
+export const Users = (props) => {
   const theme = useTheme();
   const [loading, setLoading] = useState(false);
 

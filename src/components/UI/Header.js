@@ -90,9 +90,9 @@ const useStyles = makeStyles((theme) => ({
 export const Header = (props) => {
   const classes = useStyles();
   const isLoggedIn = useState(true);
-  const isUser = useState(true);
-  const isAdmin = useState(false);
-  const [menus, setMenus] = useState(userMenus);
+  const isUser = useState(false);
+  const isAdmin = useState(true);
+  const [menus, setMenus] = useState(adminMenus);
 
   // if (isLoggedIn && isUser) setMenus(userMenus);
   // if (isLoggedIn && isAdmin) setMenus(adminMenus);
