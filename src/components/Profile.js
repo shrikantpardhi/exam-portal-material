@@ -90,7 +90,7 @@ const PersonalDetails = (props) => {
       }}
     >
       <Grid container justifyContent="space-between" direction="row" spacing={2}>
-        <Grid item sm>
+        <Grid item sm md={4} lg={4}>
           <Grid container direction="column" spacing={1} justifyContent="flex-start">
             <Grid item sm>
               <Avatar
@@ -133,7 +133,7 @@ const PersonalDetails = (props) => {
           </Grid>
         </Grid>
         
-        <Grid item sm>
+        <Grid item sm md={8} lg={8}>
           <Grid container direction="column" spacing={1}>
             <RowItem name="Address" value={props.user.address} />
             <RowItem name="State" value={props.user.state} />
