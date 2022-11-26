@@ -32,7 +32,7 @@ export const adminMenus = [
   // admin  menus
   {
     name: "Dashboard",
-    link: "/dashboard",
+    link: "/admin/dashboard",
     activeIndex: 0,
   },
   {

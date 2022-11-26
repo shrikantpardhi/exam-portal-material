@@ -2,20 +2,24 @@ import React, { useState } from "react";
 import { ThemeProvider } from "@mui/styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { theme } from "./UI/Theme";
+// Guest imports
 import LandingPage from "./LandingPage";
+import { HomeTemplate } from "./HomeTemplate";
 import About from "./About";
+import NotFound from "./NotFound";
+// user imports
 import ExamPage from "./ExamPage";
 import Exam from "./Exam";
-import { HomeTemplate } from "./HomeTemplate";
 import {Exams as UserExam} from "./user/Exams";
 import Results from "./user/Results";
 import  Result  from "./user/Result";
 import Profile from "./Profile";
-//admin imports
+// admin imports
 import { Users } from "./admin/Users";
 import ExamCategory from "./admin/ExamCategory";
 import {Exams as AdminExam} from "./admin/Exams";
 import QuestionPage from "./admin/QuestionPage";
+import Dashboard from "./admin/Dashboard";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -48,6 +52,7 @@ function App() {
             <Route path="/exam/:name/:id" element={<ExamPage />} />
 
             {/* Admin Links */}
+            <Route exact path="/admin/dashboard" element={<Dashboard />} />
             <Route exact path="/admin/exams" element={<AdminExam />} />
             <Route exact path="/admin/categories" element={<ExamCategory />} />
             <Route exact path="/admin/subjects" element={<div>subjects</div>} />
@@ -59,7 +64,8 @@ function App() {
             />
             <Route exact path="/questions" element={<div>questions</div>} />
             <Route exact path="/category/:name/:id" element={<ExamPage />} />
-          </Route>
+            <Route exact path="*" element={<NotFound />} />
+          </Route> 
           <Route exact path="/exam/start/:name/:id" element={<Exam />} />
         </Routes>
       </BrowserRouter>

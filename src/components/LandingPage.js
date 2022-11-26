@@ -7,7 +7,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Divider from "@mui/material/Divider";
 import { ExamCategory } from "./UI/Widgets/ExamCategory";
 import Subject from "./UI/Widgets/Subject";
-import { categories, subjects } from "../data";
 
 const LandingPage = (props) => {
   const theme = useTheme();
