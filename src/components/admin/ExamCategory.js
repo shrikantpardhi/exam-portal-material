@@ -6,8 +6,6 @@ import {
   Button,
   CardActions,
   Grid,
-  FormHelperText,
-  MenuItem,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -15,12 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import { Formik } from "formik";
-import DialogTitle from "@mui/material/DialogTitle";
 import { categories as ccategories } from "../../data";
+import ExamcategoryDialog from "../UI/dialog/ExamcategoryDialog";
 
 const ExamCategory = (props) => {
   const emptyCategory = {
@@ -144,153 +138,14 @@ const ExamCategory = (props) => {
         </Grid>
       </Box>
 
-      <Dialog open={openDialog} onClose={handleClose} fullWidth>
-        <DialogTitle>
-          <Typography
-            sx={{
-              ...theme.typography.h5,
-              fontSize: "1.25rem",
-              textAlign: "center",
-            }}
-          >
-            {currentCategory.id !== 0 ? "Edit Category" : "Add Category"}
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          <Formik
-            initialValues={{
-              id: currentCategory.id,
-              title: currentCategory.title,
-              premium: currentCategory.premium ? "1" : "0",
-            }}
-            validate={(values) => {
-              const errors = {};
-              if (!values.title) {
-                errors.title = "Required";
-              } else if (
-                !/^[A-Za-z]{3,15}([\w ]{1}[0-9]{2})?$/i.test(values.title)
-              ) {
-                errors.title =
-                  "Name must minimun atleast 3 character long (can be added number 2 character long). ex. EXAM 12";
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              //save data here
-              if (values.id !== 0) {
-                categories.map((item) => {
-                  if (item.id == values.id) {
-                    item.title = values.title;
-                    item.premium = values.premium === "0" ? false : true;
-                  }
-                });
-                setCategories([...categories]);
-              } else {
-                setCategories([
-                  ...categories,
-                  {
-                    id: "6",
-                    title: values.title,
-                    premium: values.premium == "0" ? false : true,
-                  },
-                ]);
-              }
-              handleClose(false);
-              //   setTimeout(() => {
-              //     setSubmitting(false);
-              //     handleClose();
-              //   }, 400);
-            }}
-          >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-              <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
-                <TextField
-                  fullWidth
-                  error={Boolean(touched.title && errors.title)}
-                  variant="outlined"
-                  id="title-name"
-                  type="text"
-                  value={values.title}
-                  name="title"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  label="Title"
-                  inputProps={{}}
-                  sx={{ m: 1 }}
-                />
-                {touched.title && errors.title && (
-                  <FormHelperText sx={{ m: 1 }} error id="helper-title">
-                    {errors.title}
-                  </FormHelperText>
-                )}
+      <ExamcategoryDialog
+        currentCategory={currentCategory}
+        openDialog={openDialog}
+        handleClose={handleClose}
+        categories={categories}
+        setCategories={setCategories}
+      />
 
-                <TextField
-                  fullWidth
-                  error={Boolean(touched.premium && errors.premium)}
-                  variant="outlined"
-                  id="premium-id"
-                  type="select"
-                  value={values.premium}
-                  name="premium"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  label="Select Premium"
-                  inputProps={{}}
-                  select
-                  sx={{ m: 1 }}
-                >
-                  <MenuItem sx={{ m: 1 }} key="0" value="0">
-                    Free
-                  </MenuItem>
-                  <MenuItem sx={{ m: 1 }} key="1" value="1">
-                    Premium
-                  </MenuItem>
-                </TextField>
-                {touched.premium && errors.premium && (
-                  <FormHelperText
-                    sx={{ m: 1 }}
-                    error
-                    id="helper-text-premium-id"
-                  >
-                    {errors.premium}
-                  </FormHelperText>
-                )}
-
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  sx={{ marginTop: 1 }}
-                >
-                  <Grid item>
-                    <Button variant="text" onClick={handleClose}>
-                      Cancel
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      disabled={isSubmitting}
-                      type="submit"
-                      disableElevation
-                    >
-                      Save
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
-            )}
-          </Formik>
-        </DialogContent>
-      </Dialog>
     </Box>
   );
 };

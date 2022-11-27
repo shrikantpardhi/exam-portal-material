@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { user } from "../data";
-import ChangePasswordForm from "./UI/frorms/ChangePasswordForm";
+import ChangePasswordForm from "./UI/forms/ChangePasswordForm";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
