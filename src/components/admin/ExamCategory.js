@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useTheme } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import InputAdornment from "@mui/material/InputAdornment";
 import {
   Button,
   CardActions,
@@ -17,7 +16,6 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Formik } from "formik";
@@ -25,14 +23,19 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { categories as ccategories } from "../../data";
 
 const ExamCategory = (props) => {
-  const emptyCategory = { id: "", title: "" };
+  const emptyCategory = {
+    id: 0,
+    title: "",
+    premium: false,
+    totalCount: 0,
+  };
   const theme = useTheme();
   const [categories, setCategories] = useState(ccategories);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [currentCategory, setCurrentCategory] = useState(emptyCategory);
 
-  console.log(JSON.stringify(categories));
   const handleClickOpen = () => {
+    setCurrentCategory(emptyCategory);
     setOpenDialog(true);
   };
 
@@ -64,11 +67,7 @@ const ExamCategory = (props) => {
           backgroundColor: theme.palette.background.headingBox,
         }}
       >
-        <Grid
-          container
-          justifyContent="space-between"
-          direction="row"
-        >
+        <Grid container justifyContent="space-between" direction="row">
           <Grid item>
             <Typography sx={{ ...theme.typography.h5 }}>
               Exam Category
@@ -106,7 +105,7 @@ const ExamCategory = (props) => {
                     color="text.secondary"
                     gutterBottom
                   >
-                    {category.premium ? "Free" : "Paid"}
+                    {category.premium === false ? "Free" : "Paid"}
                   </Typography>
                   <Typography
                     sx={{ ...theme.typography.cardTitle, marginBottom: "1em" }}
@@ -154,32 +153,48 @@ const ExamCategory = (props) => {
               textAlign: "center",
             }}
           >
-            {currentCategory.title.length !== 0
-              ? "Edit Category"
-              : "Add Category"}
+            {currentCategory.id !== 0 ? "Edit Category" : "Add Category"}
           </Typography>
         </DialogTitle>
         <DialogContent>
           <Formik
-            initialValues={{ category: currentCategory.title, premium: "0" }}
+            initialValues={{
+              id: currentCategory.id,
+              title: currentCategory.title,
+              premium: currentCategory.premium ? "1" : "0",
+            }}
             validate={(values) => {
               const errors = {};
-              if (!values.category) {
-                errors.category = "Required";
+              if (!values.title) {
+                errors.title = "Required";
               } else if (
-                !/^[A-Za-z]{3,15}([\w ]{1}[0-9]{2})?$/i.test(values.category)
+                !/^[A-Za-z]{3,15}([\w ]{1}[0-9]{2})?$/i.test(values.title)
               ) {
-                errors.category =
+                errors.title =
                   "Name must minimun atleast 3 character long (can be added number 2 character long). ex. EXAM 12";
               }
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
               //save data here
-              setCategories([
-                ...categories,
-                { id: "6", title: values.category },
-              ]);
+              if (values.id !== 0) {
+                categories.map((item) => {
+                  if (item.id == values.id) {
+                    item.title = values.title;
+                    item.premium = values.premium === "0" ? false : true;
+                  }
+                });
+                setCategories([...categories]);
+              } else {
+                setCategories([
+                  ...categories,
+                  {
+                    id: "6",
+                    title: values.title,
+                    premium: values.premium == "0" ? false : true,
+                  },
+                ]);
+              }
               handleClose(false);
               //   setTimeout(() => {
               //     setSubmitting(false);
@@ -200,25 +215,21 @@ const ExamCategory = (props) => {
               <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
                 <TextField
                   fullWidth
-                  error={Boolean(touched.category && errors.category)}
+                  error={Boolean(touched.title && errors.title)}
                   variant="outlined"
-                  id="category-name"
-                  type="category"
-                  value={values.category}
-                  name="category"
+                  id="title-name"
+                  type="text"
+                  value={values.title}
+                  name="title"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  label="Category Name"
+                  label="Title"
                   inputProps={{}}
                   sx={{ m: 1 }}
                 />
-                {touched.category && errors.category && (
-                  <FormHelperText
-                    sx={{ m: 1 }}
-                    error
-                    id="helper-text-category-name"
-                  >
-                    {errors.category}
+                {touched.title && errors.title && (
+                  <FormHelperText sx={{ m: 1 }} error id="helper-title">
+                    {errors.title}
                   </FormHelperText>
                 )}
 
@@ -227,7 +238,7 @@ const ExamCategory = (props) => {
                   error={Boolean(touched.premium && errors.premium)}
                   variant="outlined"
                   id="premium-id"
-                  type="premium"
+                  type="select"
                   value={values.premium}
                   name="premium"
                   onBlur={handleBlur}
