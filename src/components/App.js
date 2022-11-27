@@ -20,6 +20,7 @@ import ExamCategory from "./admin/ExamCategory";
 import {Exams as AdminExam} from "./admin/Exams";
 import QuestionPage from "./admin/QuestionPage";
 import Dashboard from "./admin/Dashboard";
+import Subjects from "./admin/Subjects";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -55,7 +56,7 @@ function App() {
             <Route exact path="/admin/dashboard" element={<Dashboard />} />
             <Route exact path="/admin/exams" element={<AdminExam />} />
             <Route exact path="/admin/categories" element={<ExamCategory />} />
-            <Route exact path="/admin/subjects" element={<div>subjects</div>} />
+            <Route exact path="/admin/subjects" element={<Subjects />} />
             <Route exact path="/admin/users" element={<Users />} />
             <Route
               exact
