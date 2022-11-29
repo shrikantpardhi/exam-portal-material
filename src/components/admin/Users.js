@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Typography } from "@mui/material";
 import { useTheme } from "@mui/styles";
-import {
-  DataGrid,
-  GridToolbar,
-  
-} from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import IconButton from "@mui/material/IconButton";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 
 const label = { inputProps: { "aria-label": "Swich User State" } };
 
@@ -32,27 +31,23 @@ export const Users = (props) => {
       headerName: "First name",
       width: 150,
       hideable: false,
-      flex: 1,
     },
     {
       field: "lastName",
       headerName: "Last name",
       width: 150,
-      flex: 1,
     },
     {
       field: "age",
       headerName: "Age",
       type: "number",
       width: 110,
-      flex: 1,
     },
     {
       field: "fullName",
       headerName: "Full name",
       sortable: false,
       width: 160,
-      flex: 1,
       valueGetter: (params) =>
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
@@ -62,12 +57,17 @@ export const Users = (props) => {
       description: "Disable or  Delete",
       sortable: false,
       width: 160,
-      flex: 1,
       renderCell: ({ row }) => {
         return [
-          <Switch {...label} checked onChange={handleSwitchState(row)} />,
+          // <Switch {...label} checked onChange={handleSwitchState(row)} />,
           <IconButton sx={{ ml: 1 }} onClick={handleDelete(row)}>
-            <DeleteIcon />
+            <VisibilityRoundedIcon color="info" />
+          </IconButton>,
+          <IconButton sx={{ ml: 1 }} onClick={handleDelete(row)}>
+            <EditRoundedIcon color="warning" />
+          </IconButton>,
+          <IconButton sx={{ ml: 1 }} onClick={handleDelete(row)}>
+            <DeleteRoundedIcon color="error" />
           </IconButton>,
         ];
       },
@@ -90,22 +90,30 @@ export const Users = (props) => {
   ];
 
   return (
-    <Box sx={{ margin: "1em" }}>
-      <Typography
+    <Box sx={{ m: 3, width: "auto", height: "auto", flexGrow: 1 }}>
+      <Box
         sx={{
-          margin: "1em",
-          fontWeight: 700,
-          fontSize: "1em",
-          color: theme.palette.common.blue,
+          p: 1,
+          backgroundColor: theme.palette.background.headingBox,
         }}
       >
-        User List
-      </Typography>
-      <Box sx={{ height: 400,  }}>
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: "1em",
+            color: theme.palette.common.blue,
+          }}
+        >
+          User List
+        </Typography>
+      </Box>
+
+      <Box sx={{ mt: 1, height: 400 }}>
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={5}
+          disableColumnSelector
           components={{
             Toolbar: GridToolbar,
           }}
@@ -115,6 +123,7 @@ export const Users = (props) => {
           loading={loading}
           rowsPerPageOptions={[5]}
           experimentalFeatures={{ newEditingApi: true }}
+          sx={{ overflowX: "scroll" }}
         />
       </Box>
     </Box>
