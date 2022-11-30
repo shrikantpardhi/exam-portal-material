@@ -38,6 +38,9 @@ export default function Footer(props) {
           pb: 1,
           pl: 2,
           pr: 2,
+          [theme.breakpoints.down("sm")]: {
+            position: "relative",
+          },
         }}
         elevation={3}
       >

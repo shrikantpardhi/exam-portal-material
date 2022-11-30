@@ -201,3 +201,63 @@ export const user = {
     },
   ],
 };
+
+export const users = [
+ {
+  userName: "sdhfkjfhsdkf",
+  firstName: "Shri",
+  lastName: "Pardhi",
+  email: "shripardhi@gmail.com",
+  mobile: "8975307295",
+  address: "Address hai",
+  image: "abc.jpg",
+  city: "Nagpur",
+  state: "Maharashtra",
+  education: "Degree",
+  status: false,
+  role: [
+    {
+      roleName: "User",
+      roleDescription: "User",
+    },
+  ],
+},
+{
+  userName: "sdhfkjfhsdkfds",
+  firstName: "Shri",
+  lastName: "Pardhi",
+  email: "shripardhi@gmail.com",
+  mobile: "8975307295",
+  address: "Address hai",
+  image: "abc.jpg",
+  city: "Nagpur",
+  state: "Maharashtra",
+  education: "Degree",
+  status: true,
+  role: [
+    {
+      roleName: "User",
+      roleDescription: "User",
+    },
+  ],
+},
+{
+  userName: "sdhfkjfhsdkfdfg",
+  firstName: "Shri",
+  lastName: "Pardhi",
+  email: "shripardhi@gmail.com",
+  mobile: "8975307295",
+  address: "Address hai",
+  image: "abc.jpg",
+  city: "Nagpur",
+  state: "Maharashtra",
+  education: "Degree",
+  status: true,
+  role: [
+    {
+      roleName: "User",
+      roleDescription: "User",
+    },
+  ],
+},
+];
