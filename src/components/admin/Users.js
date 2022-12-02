@@ -9,20 +9,55 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import { users as userList } from "../../data";
+import UserDialog from "../UI/dialog/UserDialog";
 
 const label = { inputProps: { "aria-label": "Swich User State" } };
 
 export const Users = (props) => {
   const theme = useTheme();
+  const initialUser = {
+    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobile: "",
+    address: "",
+    image: "",
+    city: "",
+    state: "",
+    education: "",
+    status: true,
+    role: [
+      {
+        roleName: "User",
+        roleDescription: "User",
+      },
+    ],
+  };
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState(userList);
+  const [editMode, setEditMode] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [currentUser, setCurrentUser] = useState(initialUser);
 
   const handleSwitchState = (row) => () => {
     console.log(row);
   };
 
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
+
   const handleDelete = (row) => () => {
     console.log(row);
+  };
+  const handleView = (row) => () => {
+    setEditMode(false);
+    setOpenDialog(true);
+  };
+  const handleEdit = (row) => () => {
+    setEditMode(true);
+    setOpenDialog(true);
   };
 
   const columns = [
@@ -74,10 +109,10 @@ export const Users = (props) => {
       renderCell: ({ row }) => {
         return [
           // <Switch {...label} checked onChange={handleSwitchState(row)} />,
-          <IconButton key="viewBtn" sx={{ ml: 1 }} onClick={handleDelete(row)}>
+          <IconButton key="viewBtn" sx={{ ml: 1 }} onClick={handleView(row)}>
             <VisibilityRoundedIcon color="info" />
           </IconButton>,
-          <IconButton key="EditBtn" sx={{ ml: 1 }} onClick={handleDelete(row)}>
+          <IconButton key="EditBtn" sx={{ ml: 1 }} onClick={handleEdit(row)}>
             <EditRoundedIcon color="warning" />
           </IconButton>,
           <IconButton
@@ -133,6 +168,13 @@ export const Users = (props) => {
           sx={{ overflowX: "scroll" }}
         />
       </Box>
+      <UserDialog
+        currentUser={currentUser}
+        openDialog={openDialog}
+        handleClose={handleClose}
+        setCurrentUser={setCurrentUser}
+        editMode={editMode}
+      />
     </Box>
   );
 };
