@@ -45,6 +45,7 @@ export const Users = (props) => {
   };
 
   const handleClose = () => {
+    setCurrentUser(initialUser);
     setOpenDialog(false);
   };
 
@@ -52,10 +53,12 @@ export const Users = (props) => {
     console.log(row);
   };
   const handleView = (row) => () => {
+    setCurrentUser(row);
     setEditMode(false);
     setOpenDialog(true);
   };
   const handleEdit = (row) => () => {
+    setCurrentUser(row);
     setEditMode(true);
     setOpenDialog(true);
   };

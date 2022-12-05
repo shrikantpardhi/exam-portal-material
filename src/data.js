@@ -261,3 +261,22 @@ export const users = [
   ],
 },
 ];
+
+export const states = [
+  {
+    id:1,
+    name:"Maharashtra"
+  },
+  {
+    id:2,
+    name:"Madhya Pradhesh"
+  },
+  {
+    id:3,
+    name:"Karnataka"
+  },
+  {
+    id:4,
+    name:"Punjab"
+  },
+]

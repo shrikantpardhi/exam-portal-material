@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useTheme } from "@mui/styles";
+import { styled, useTheme } from "@mui/styles";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -8,14 +8,11 @@ import {
   Divider,
   FormHelperText,
   Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
 import Switch from "@mui/material/Switch";
+import { states } from "../../../data";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -32,23 +29,18 @@ const UserForm = (props) => {
   return (
     <Formik
       initialValues={{
-        userName: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        mobile: "",
-        address: "",
+        userName: currentUser.userName,
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        email: currentUser.email,
+        mobile: currentUser.mobile,
+        address: currentUser.address,
         image: "",
-        city: "",
-        state_id: 1,
-        education: "",
-        status: true,
-        role: [
-          {
-            roleName: "User",
-            roleDescription: "User",
-          },
-        ],
+        city: currentUser.city,
+        state: currentUser.state,
+        education: currentUser.education,
+        status: currentUser.status,
+        role: currentUser.role,
       }}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(25).required("First name required"),
@@ -61,7 +53,7 @@ const UserForm = (props) => {
           .matches(phoneRegExp, "Phone number is not valid")
           .required("Mobile number required"),
         city: Yup.string(),
-        state_id: Yup.string(),
+        id: Yup.string(),
         education: Yup.string(),
         role: Yup.string(),
         status: Yup.string(),
@@ -92,6 +84,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.firstName && errors.firstName)}
                     variant="outlined"
                     id="outlined-firstName"
@@ -100,6 +93,11 @@ const UserForm = (props) => {
                     name="firstName"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.firstName && errors.firstName && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-firstName">
@@ -117,6 +115,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.lastName && errors.lastName)}
                     variant="outlined"
                     id="outlined-lastName"
@@ -125,6 +124,11 @@ const UserForm = (props) => {
                     name="lastName"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.lastName && errors.lastName && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-lastName">
@@ -142,6 +146,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.email && errors.email)}
                     variant="outlined"
                     id="outlined-email"
@@ -150,6 +155,11 @@ const UserForm = (props) => {
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.email && errors.email && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-email">
@@ -167,6 +177,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.mobile && errors.mobile)}
                     variant="outlined"
                     id="outlined-mobile"
@@ -175,6 +186,11 @@ const UserForm = (props) => {
                     name="mobile"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.mobile && errors.mobile && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-mobile">
@@ -192,6 +208,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.city && errors.city)}
                     variant="outlined"
                     id="outlined-city"
@@ -200,6 +217,11 @@ const UserForm = (props) => {
                     name="city"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.city && errors.city && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-city">
@@ -217,6 +239,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.address && errors.address)}
                     variant="outlined"
                     id="outlined-address"
@@ -225,6 +248,11 @@ const UserForm = (props) => {
                     name="address"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.address && errors.address && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-address">
@@ -242,33 +270,31 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     variant="outlined"
                     id="select-state"
-                    select
-                    value={values.state_id}
-                    name="state_id"
+                    type="string"
+                    value={values.state}
+                    name="state"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   >
-                    <MenuItem key="0" value="0">
+                    {/* <MenuItem key="0" value="null">
                       Select
                     </MenuItem>
-                    <MenuItem key="1" value="1">
-                      Ten
-                    </MenuItem>
-                    <MenuItem key="2" value="2">
-                      Twenty
-                    </MenuItem>
-                    <MenuItem key="3" value="3">
-                      Thirty
-                    </MenuItem>
+                    {states.map((state) => (
+                      <MenuItem key={state.id} value={state.id}>
+                        {state.name}
+                      </MenuItem>
+                    ))} */}
                   </TextField>
                   {touched.state && errors.state && (
-                    <FormHelperText
-                      sx={{ m: 1 }}
-                      error
-                      id="helper-text-exam-category-id"
-                    >
+                    <FormHelperText sx={{ m: 1 }} error id="helper-state">
                       {errors.state}
                     </FormHelperText>
                   )}
@@ -283,6 +309,7 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
+                    disabled={!editMode}
                     error={Boolean(touched.education && errors.education)}
                     variant="outlined"
                     id="outlined-education"
@@ -291,6 +318,11 @@ const UserForm = (props) => {
                     name="education"
                     onBlur={handleBlur}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                   {touched.education && errors.education && (
                     <FormHelperText sx={{ m: 1 }} error id="helper-education">
@@ -308,12 +340,17 @@ const UserForm = (props) => {
                 <Grid item xs sm={8} md={8} lg={8}>
                   <TextField
                     fullWidth
-                    readOnly
+                    disabled
                     variant="outlined"
                     id="outlined-education"
                     type="string"
                     value={values.role.map((r) => r.roleName)}
                     name="role"
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#000000",
+                      },
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -324,7 +361,7 @@ const UserForm = (props) => {
                   <Typography variant="body1">Status</Typography>
                 </Grid>
                 <Grid item xs sm={8} md={8} lg={8}>
-                  <Switch checked={toggle} onChange={handleSwitchState} />
+                  <Switch disabled={!editMode} checked={toggle} onChange={handleSwitchState} />
                 </Grid>
               </Grid>
             </Grid>
