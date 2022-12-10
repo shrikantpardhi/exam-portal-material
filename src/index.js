@@ -4,10 +4,11 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import { createRoot } from "react-dom/client";
+import { ReactDOM } from "react-dom";
 
 const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-root.render(
+ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
@@ -16,7 +17,8 @@ root.render(
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
 
 
