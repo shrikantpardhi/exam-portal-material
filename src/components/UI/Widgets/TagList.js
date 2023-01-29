@@ -5,9 +5,10 @@ import { categories } from "../../../data";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
 import useRandomColor from "../../util/useRandomColor";
-import { ExamCategoryCard } from "../card/ExamCategoryCard";
+import { TagCard } from "../card/TagCard";
+import ExamListDialog from "../dialog/ExamListDialog";
 
-export const ExamCategory = () => {
+const TagList = (props) => {
   const theme = useTheme();
   //added to filter cards
   const [error, setError] = useState(null);
@@ -17,6 +18,17 @@ export const ExamCategory = () => {
   const [searchParam] = useState(["title", "premium"]);
   const [filterParam, setFilterParam] = useState(["All"]);
   const { color, generateColor } = useRandomColor();
+  const [current, setCurrent] = useState([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -66,7 +78,7 @@ export const ExamCategory = () => {
                   fontWeight: 600,
                 }}
               >
-                Exam Categories
+                Exam List
               </Typography>
             </Grid>
             <Grid item>
@@ -100,11 +112,23 @@ export const ExamCategory = () => {
         <Box sx={{ mt: "1rem", mb: "1rem" }}>
           <Grid container spacing={2}>
             {search(data).map((item) => (
-              <ExamCategoryCard item={item} />
+              <TagCard
+                item={item}
+                key={item.id}
+                open={open}
+                handleClickOpen={handleClickOpen}
+                setCurrent={setCurrent}
+              />
             ))}
           </Grid>
         </Box>
+        <ExamListDialog
+          item={current}
+          open={open}
+          handleClose={handleClose}
+        />
       </Box>
     );
   }
 };
+export default TagList;

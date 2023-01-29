@@ -5,11 +5,17 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Divider from "@mui/material/Divider";
-import { ExamCategory } from "./UI/Widgets/ExamCategory";
-import Subject from "./UI/Widgets/Subject";
+import TagList from "./UI/Widgets/TagList";
+import AddCodeDialog from "./UI/dialog/AddCodeDialog";
 
 const LandingPage = (props) => {
   const theme = useTheme();
+  const isLoggedIn = useState(true);
+  const [openCodeDialog, setOpenCodeDialog] = useState(false);
+
+  const handleCodeDialog = () => {
+    setOpenCodeDialog(!openCodeDialog);
+  }
 
   return (
     <Grid container direction="column" sx={{ marginBottom: "2em" }}>
@@ -75,18 +81,33 @@ const LandingPage = (props) => {
                 <ArrowForwardIcon />
               </Button>
             </Grid>
+            {isLoggedIn && (
+              <Grid item>
+                <Button
+                  variant="contained"
+                  sx={{
+                    ...theme.typography.registerHereButton,
+                    margin: "1rem",
+                    borderRadius: 50,
+                    fontWeight: "bold",
+                    height: 45,
+                    width: 145,
+                  }}
+                  color="success"
+                  onClick={handleCodeDialog}
+                >
+                  Have a Code
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>
+      <AddCodeDialog openCodeDialog={openCodeDialog} handleCodeDialog={handleCodeDialog} />
       <Divider variant="middle" />
       {/* Exam List */}
       <Grid item>
-        <ExamCategory />
-      </Grid>
-      <Divider variant="middle" />
-      {/* Subject List */}
-      <Grid item>
-        <Subject />
+        <TagList />
       </Grid>
     </Grid>
   );

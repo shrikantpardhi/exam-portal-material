@@ -47,7 +47,7 @@ function App() {
           <Route exact path="*" element={<NotFound />} />
 
           {/* we want to protect these routes */}
-          <Route element={<PersistLogin />}>
+          <Route >
             <Route exact path="/profile" element={<Profile />} />
 
             {/* User Links */}

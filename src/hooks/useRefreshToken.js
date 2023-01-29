@@ -7,14 +7,14 @@ const useRefreshToken = () => {
   const auth = useAuth();
   const [cookies] = useCookies(["keju-exa-portal"]);
 
-  const isPersist = cookies?.persist || false;
-  const user = auth?.user ? auth.user : cookies ? cookies.user : null;
+  const isPersist = cookies.persist || false;
+  const user = auth.user ? auth.user : cookies ? cookies.user : null;
   const roles = user
     ? user.role.map((r) => {
         return r.roleName;
       })
     : null;
-  const accessToken = auth?.user
+  const accessToken = auth.user
     ? auth.accesToken
     : cookies
     ? cookies.accessToken
@@ -32,8 +32,8 @@ const useRefreshToken = () => {
               withCredentials: true,
             })
             .then((response) => {
-              const newAccessToken = response?.data?.jwtToken;
-              const newRoles = response?.data?.user.role.map((r) => {
+              const newAccessToken = response.data.jwtToken;
+              const newRoles = response.data.user.role.map((r) => {
                 return r.roleName;
               });
               return setAuth((prev) => {

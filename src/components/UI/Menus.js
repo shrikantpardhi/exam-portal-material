@@ -28,6 +28,7 @@ export const userMenus = [
   },
 ];
 
+
 export const adminMenus = [
   // admin  menus
   {
@@ -41,29 +42,24 @@ export const adminMenus = [
     activeIndex: 1,
   },
   {
-    name: "Exam Category",
-    link: "/admin/categories",
+    name: "Result",
+    link: "/admin/results",
     activeIndex: 2,
-  },
-  {
-    name: "Subject",
-    link: "/admin/subjects",
-    activeIndex: 3,
   },
   {
     name: "Users",
     link: "/admin/users",
-    activeIndex: 4,
+    activeIndex: 3,
   },
   {
     name: "Profile",
     link: "/profile",
-    activeIndex: 5,
+    activeIndex: 4,
   },
   {
     name: "Log Out",
     link: "/logout",
-    activeIndex: 6,
+    activeIndex: 5,
   },
 ];
 

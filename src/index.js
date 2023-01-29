@@ -8,7 +8,7 @@ import { ReactDOM } from "react-dom";
 
 const container = document.getElementById("root");
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
-ReactDOM.render(
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
@@ -18,7 +18,7 @@ ReactDOM.render(
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root")
+  // document.getElementById("root")
 );
 
 

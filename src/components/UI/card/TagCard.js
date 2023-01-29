@@ -6,19 +6,17 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 
-export const ExamCategoryCard = (props) => {
+export const TagCard = (props) => {
   const item = props.item;
   const theme = useTheme();
   return (
     <Grid item key={item.title} xs={12} sm={6} md={4} lg={3}>
       <CardActionArea
-        component={Link}
-        to={{
-          pathname: `/exam/${item.title}/${item.id}`,
-          state: `${item}`,
+        onClick={(event) => {
+          props.setCurrent(item);
+          props.handleClickOpen();
         }}
       >
         <Card

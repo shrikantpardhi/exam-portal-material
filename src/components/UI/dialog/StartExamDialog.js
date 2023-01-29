@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useTheme } from "@mui/styles";
 import {
   Grid,
@@ -46,7 +47,7 @@ const StartExamDialog = (props) => {
             textAlign: "center",
           }}
         >
-          Instructions 
+          {props.exam.examTitle}
         </Typography>
       </DialogTitle>
       <DialogContent>
@@ -84,5 +85,8 @@ const StartExamDialog = (props) => {
     </Dialog>
   );
 };
-
+StartExamDialog.propTypes = {
+  children: PropTypes.node,
+  exam: PropTypes.object.isRequired,
+};
 export default StartExamDialog;

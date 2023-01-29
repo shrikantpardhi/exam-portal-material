@@ -7,6 +7,7 @@ const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { auth, persist } = useAuth();
+  
   useEffect(() => {
     let isMounted = true;
 
@@ -22,14 +23,14 @@ const PersistLogin = () => {
 
     // persist added here
     // Avoids unwanted call to verifyRefreshToken
-    !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
+    !auth.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => (isMounted = false);
   }, []);
 
   useEffect(() => {
     console.log(`isLoading: ${isLoading}`);
-    console.log(`auth user : ${JSON.stringify(auth?.user)}`);
+    console.log(`auth user : ${JSON.stringify(auth.user)}`);
   }, [isLoading]);
 
   return (

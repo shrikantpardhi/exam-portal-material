@@ -22,23 +22,26 @@ export const exams = [
     updated: "2017-01-25",
     examDescription: "2017-01-25",
     examDuration: 60,
-    examEndDate: "2017-01-25",
+    examStartDate: "",
+    examEndDate: "",
     examTitle: "Exam 01",
     isNegativeAllowed: true,
     isPaid: true,
     totalMark: 60,
-    examCategoryDto: {
-      examCategoryId: 1,
-      examCategoryName: "SSC",
-      examCount: 10,
-      isPremium: false,
-    },
-    subjectDto: {
-      subjectId: 1,
-      title: "ENG",
-      description: "2017-01-25",
-      created: "2017-01-25",
-      updated: "2017-01-25",
+    tags: [
+      {
+        id: 1,
+        name: "SSC",
+      },
+      {
+        id: 2,
+        name: "GEO",
+      },
+    ],
+    code: {
+      codeId: "1",
+      code: "EDU1",
+      description: "desc",
     },
     questionCount: 15,
   },
@@ -49,24 +52,22 @@ export const exams = [
     updated: "2017-01-25",
     examDescription: "2017-01-25",
     examDuration: 60,
-    examEndDate: "2017-01-25",
+    examStartDate: "",
+    examEndDate: "",
     examTitle: "Exam 02",
     isNegativeAllowed: false,
     isPaid: false,
     totalMark: 100,
-    examCategoryDto: {
-      examCategoryId: 2,
-      examCategoryName: "UPSC",
-      examCount: 10,
-      isPremium: false,
-    },
-    subjectDto: {
-      subjectId: 2,
-      title: "GEO",
-      description: "descriptoin",
-      created: "2017-01-25",
-      updated: "2017-01-25",
-    },
+    tags: [
+      {
+        id: 1,
+        name: "SSC",
+      },
+      {
+        id: 2,
+        name: "GEO",
+      },
+    ],
     questionCount: 50,
   },
 ];
@@ -203,80 +204,217 @@ export const user = {
 };
 
 export const users = [
- {
-  userName: "sdhfkjfhsdkf",
-  firstName: "Shri",
-  lastName: "Pardhi",
-  email: "shripardhi@gmail.com",
-  mobile: "8975307295",
-  address: "Address hai",
-  image: "abc.jpg",
-  city: "Nagpur",
-  state: "Maharashtra",
-  education: "Degree",
-  status: false,
-  role: [
-    {
-      roleName: "User",
-      roleDescription: "User",
-    },
-  ],
-},
-{
-  userName: "sdhfkjfhsdkfds",
-  firstName: "Shri",
-  lastName: "Pardhi",
-  email: "shripardhi@gmail.com",
-  mobile: "8975307295",
-  address: "Address hai",
-  image: "abc.jpg",
-  city: "Nagpur",
-  state: "Maharashtra",
-  education: "Degree",
-  status: true,
-  role: [
-    {
-      roleName: "User",
-      roleDescription: "User",
-    },
-  ],
-},
-{
-  userName: "sdhfkjfhsdkfdfg",
-  firstName: "Shri",
-  lastName: "Pardhi",
-  email: "shripardhi@gmail.com",
-  mobile: "8975307295",
-  address: "Address hai",
-  image: "abc.jpg",
-  city: "Nagpur",
-  state: "Maharashtra",
-  education: "Degree",
-  status: true,
-  role: [
-    {
-      roleName: "User",
-      roleDescription: "User",
-    },
-  ],
-},
+  {
+    userName: "sdhfkjfhsdkf",
+    firstName: "Shri",
+    lastName: "Pardhi",
+    email: "shripardhi@gmail.com",
+    mobile: "8975307295",
+    address: "Address hai",
+    image: "abc.jpg",
+    city: "Nagpur",
+    state: "Maharashtra",
+    education: "Degree",
+    status: false,
+    role: [
+      {
+        roleName: "User",
+        roleDescription: "User",
+      },
+    ],
+  },
+  {
+    userName: "sdhfkjfhsdkfds",
+    firstName: "Shri",
+    lastName: "Pardhi",
+    email: "shripardhi@gmail.com",
+    mobile: "8975307295",
+    address: "Address hai",
+    image: "abc.jpg",
+    city: "Nagpur",
+    state: "Maharashtra",
+    education: "Degree",
+    status: true,
+    role: [
+      {
+        roleName: "User",
+        roleDescription: "User",
+      },
+    ],
+  },
+  {
+    userName: "sdhfkjfhsdkfdfg",
+    firstName: "Shri",
+    lastName: "Pardhi",
+    email: "shripardhi@gmail.com",
+    mobile: "8975307295",
+    address: "Address hai",
+    image: "abc.jpg",
+    city: "Nagpur",
+    state: "Maharashtra",
+    education: "Degree",
+    status: true,
+    role: [
+      {
+        roleName: "User",
+        roleDescription: "User",
+      },
+    ],
+  },
 ];
 
 export const states = [
   {
-    id:1,
-    name:"Maharashtra"
+    id: 1,
+    name: "Maharashtra",
   },
   {
-    id:2,
-    name:"Madhya Pradhesh"
+    id: 2,
+    name: "Madhya Pradhesh",
   },
   {
-    id:3,
-    name:"Karnataka"
+    id: 3,
+    name: "Karnataka",
   },
   {
-    id:4,
-    name:"Punjab"
+    id: 4,
+    name: "Punjab",
   },
-]
+];
+
+export const tags = [
+  {
+    id: 1,
+    name: "SSC",
+  },
+  {
+    id: 2,
+    name: "GEO",
+  },
+  {
+    id: 3,
+    name: "ENG",
+  },
+  {
+    id: 4,
+    name: "POLITY",
+  },
+];
+
+export const educatorCodes = [
+  {
+    codeId: "1",
+    code: "EDU1",
+    description: "desc",
+  },
+  {
+    codeId: "2",
+    code: "EDU2",
+    description: "desc",
+  },
+];
+
+export const questions = [
+  {
+    id: "1",
+    questionId: "1",
+    examDto: "",
+    tag: {
+      id: "1",
+      name: "ENG",
+    },
+    questionTypeDto: {
+      questionTypeId: 1,
+      questionTypeName: "Multiple",
+      questionTypeCode: "M",
+    },
+    answerDtoList: [
+      {
+        answerId: "1",
+        questionDto: "",
+        answerText: "Answer 1",
+        answerImage: "",
+        isCorrect: false,
+      },
+      {
+        answerId: "2",
+        questionDto: "",
+        answerText: "Answer2",
+        answerImage: "",
+        isCorrect: true,
+      },
+      {
+        answerId: "3",
+        questionDto: "",
+        answerText: "Answer 3",
+        answerImage: "",
+        isCorrect: false,
+      },
+      {
+        answerId: "4",
+        questionDto: "",
+        answerText: "Answer 4",
+        answerImage: "",
+        isCorrect: false,
+      },
+    ],
+    questionTitle: "What is your name?",
+    questionDescription: "",
+    questionAnswerDescription: "",
+    isNegativeAllowed: true,
+    questionImage: "",
+    questionAnswerDescriptionImage: "",
+    questionMark: 1,
+  },
+  {
+    id: "2",
+    questionId: "2",
+    examDto: "",
+    tag: {
+      id: "1",
+      name: "GEO",
+    },
+    questionTypeDto: {
+      questionTypeId: 1,
+      questionTypeName: "Single",
+      questionTypeCode: "S",
+    },
+    answerDtoList: [
+      {
+        answerId: "1",
+        questionDto: "",
+        answerText: "Answer 1",
+        answerImage: "",
+        isCorrect: false,
+      },
+      {
+        answerId: "2",
+        questionDto: "",
+        answerText: "Answer2",
+        answerImage: "",
+        isCorrect: false,
+      },
+      {
+        answerId: "3",
+        questionDto: "",
+        answerText: "Answer 3",
+        answerImage: "",
+        isCorrect: false,
+      },
+      {
+        answerId: "4",
+        questionDto: "",
+        answerText: "Answer 4",
+        answerImage: "",
+        isCorrect: true,
+      },
+    ],
+    questionTitle: "Your age?",
+    questionDescription: "",
+    questionAnswerDescription: "",
+    isNegativeAllowed: false,
+    questionImage: "",
+    questionAnswerDescriptionImage: "",
+    questionMark: 2,
+  },
+];

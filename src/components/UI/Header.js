@@ -110,54 +110,8 @@ export const Header = (props) => {
     typeof navigator !== "undefined" &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  // const menus = [
-  //   {
-  //     name: "Home",
-  //     link: "/",
-  //     activeIndex: 0,
-  //   },
-  //   {
-  //     name: "Exams",
-  //     link: "/exams",
-  //     activeIndex: 1,
-  //     ariaOwns: anchorEl ? "exam-menu" : undefined,
-  //     ariaPopup: anchorEl ? "true" : undefined,
-  //     mouseOver: (event) => handleClick(event),
-  //   },
-  //   {
-  //     name: "Subject",
-  //     link: "/subjects",
-  //     activeIndex: 2,
-  //   },
-  //   {
-  //     name: "Result",
-  //     link: "/results",
-  //     activeIndex: 4,
-  //   },
-  //   {
-  //     name: "Customers",
-  //     link: "/customers",
-  //     activeIndex: 5,
-  //   },
-  //   {
-  //     name: "Profile",
-  //     link: "/profile",
-  //     activeIndex: 6,
-  //   },
-  //   {
-  //     name: "About Us",
-  //     link: "/about",
-  //     activeIndex: 7,
-  //   },
-  // ];
-
   const handleChange = (e, newValue) => {
     props.setValue(newValue);
-  };
-
-  const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
-    setOpenMenu(true);
   };
 
   const handleClose = (e) => {
