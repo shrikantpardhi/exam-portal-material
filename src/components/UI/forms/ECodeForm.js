@@ -17,10 +17,11 @@ import * as Yup from "yup";
 const ECodeForm = (props) => {
   const theme = useTheme();
   const [openError, setOpenError] = useState(true);
-  const error = useState({
+  const [errorDetail, setErrorDetail] = useState({
     severity: "error",
-    message: "This is error",
+    message: "This is an info alert — check it out!",
   });
+
   return (
     <Formik
       initialValues={{
@@ -43,27 +44,6 @@ const ECodeForm = (props) => {
         isSubmitting,
       }) => (
         <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
-          <Collapse in={openError}>
-            <Alert
-              severity={error.severity}
-              variant="filled"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenError(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
-              sx={{ mb: 2 }}
-            >
-              {error.message}
-            </Alert>
-          </Collapse>
           <Grid
             container
             direction="row"
@@ -91,14 +71,32 @@ const ECodeForm = (props) => {
               )}
             </Grid>
             <Grid item md={2} lg={2}>
-              <Button
-                variant="contained"
-                type="submit"
-              >
+              <Button variant="contained" type="submit">
                 Save
               </Button>
             </Grid>
           </Grid>
+          <Collapse in={openError}>
+            <Alert
+              severity={errorDetail.severity}
+              variant="outlined"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpenError(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              {errorDetail.message}
+            </Alert>
+          </Collapse>
         </form>
       )}
     </Formik>
