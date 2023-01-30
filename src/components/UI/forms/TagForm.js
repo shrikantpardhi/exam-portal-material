@@ -7,7 +7,7 @@ import { TagService } from "../../../service/TagService";
 import SnakAlert from "../alert/SnakAlert";
 
 const TagForm = (props) => {
-  let { tags, setLoading, setTags } = props;
+  let { tags, setTags } = props;
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -126,7 +126,6 @@ const TagForm = (props) => {
 TagForm.propTypes = {
   children: PropTypes.node,
   tags: PropTypes.array.isRequired,
-  setLoading: PropTypes.func.isRequired,
   setTags: PropTypes.func.isRequired,
 };
 

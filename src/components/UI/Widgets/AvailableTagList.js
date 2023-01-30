@@ -32,6 +32,9 @@ const AvailableTagList = (props) => {
   );
 };
 
-AvailableTagList.propTypes = {};
+AvailableTagList.propTypes = {
+  children: PropTypes.node,
+  tags: PropTypes.array.isRequired,
+};
 
 export default AvailableTagList;

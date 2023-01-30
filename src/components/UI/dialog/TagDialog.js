@@ -14,14 +14,12 @@ import { TagService } from '../../../service/TagService';
 const TagDialog = (props) => {
   const theme = useTheme();
   const { openTag, handleTag } = props;
-  const [loading, setLoading] = useState(true);
   const [tags, setTags] = useState([]);
   const tagService = new TagService();
 
   useEffect(() => {
     tagService.getAll().then((data) => {
       setTags(data);
-      setLoading(false);
     });
   }, []);
 
@@ -47,16 +45,12 @@ const TagDialog = (props) => {
       <DialogContent>
         <TagForm
           tags={tags}
-          loading={loading}
-          setLoading={setLoading}
           setTags={setTags}
         />
         {/* available tags  */}
         <Divider>Available Tags</Divider>
         <AvailableTagList
           tags={tags}
-          loading={loading}
-          setLoading={setLoading}
         />
       </DialogContent>
     </Dialog>
