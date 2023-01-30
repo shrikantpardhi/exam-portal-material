@@ -33,8 +33,7 @@ const TagForm = (props) => {
         validationSchema={Yup.object({
           name: Yup.string().required("Required"),
         })}
-        onSubmit={(values, actions, resetForm) => {
-          setLoading(true);
+        onSubmit={(values, actions) => {
           const response = tagService
             .create({ name: values.name })
             .then((data) => {
@@ -51,7 +50,7 @@ const TagForm = (props) => {
                 setOpen(true);
               }
             });
-          resetForm();
+          actions.resetForm();
           actions.setSubmitting(false);
         }}
       >

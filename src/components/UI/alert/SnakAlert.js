@@ -2,12 +2,14 @@ import * as React from "react";
 import PropTypes from 'prop-types'
 import { Snackbar } from '@mui/material';
 import MuiAlert from "@mui/material/Alert";
+import { useTheme } from "@mui/styles";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const SnakAlert = props => {
+   const theme = useTheme();
     const {open, setOpen, severity, message} = props;
 
     const handleClose = (event, reason) => {
@@ -23,6 +25,7 @@ const SnakAlert = props => {
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       key={"top" + "left"}
+      sx={{ zIndex: theme.zIndex.snackbar }}
     >
       <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
         {message}

@@ -1,108 +1,150 @@
 import React, { useState } from "react";
-import { useTheme } from "@mui/styles";
 import PropTypes from "prop-types";
-import {
-  Alert,
-  Button,
-  Collapse,
-  FormHelperText,
-  Grid,
-  TextField,
-} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import { Button, FormHelperText, Grid, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import SnakAlert from "../alert/SnakAlert";
+import { EcodeService } from "../../../service/EcodeService";
 
 const ECodeForm = (props) => {
-  const theme = useTheme();
-  const [openError, setOpenError] = useState(true);
-  const [errorDetail, setErrorDetail] = useState({
-    severity: "error",
-    message: "This is an info alert — check it out!",
-  });
+  let { ecodes, setEcodes } = props;
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [found, setFound] = useState(false);
+  const codeService = new EcodeService();
+
+  const findCode = (e) => {
+    let found = ecodes.find((option, i) => {
+      let code = e.target.value.toLocaleUpperCase();
+      if (option.code.toLocaleUpperCase() === code) return true;
+    });
+    if (found === undefined) setFound(false);
+    else setFound(true);
+  };
 
   return (
-    <Formik
-      initialValues={{
-        ecode: "",
-      }}
-      validationSchema={Yup.object({
-        ecode: Yup.string().required("Required"),
-      })}
-      onSubmit={(values) => {
-        console.log(JSON.stringify(values));
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Grid item md={9} lg={9}>
-              <TextField
-                fullWidth
-                error={Boolean(touched.ecode && errors.ecode)}
-                variant="outlined"
-                id="ecode-id"
-                type="string"
-                value={values.ecode}
-                name="ecode"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                label="Code"
-                sx={{ m: 1 }}
-              />
-              {touched.ecode && errors.ecode && (
-                <FormHelperText sx={{ m: 1 }} error id="helper-text-ecode">
-                  {errors.ecode}
-                </FormHelperText>
-              )}
-            </Grid>
-            <Grid item md={2} lg={2}>
-              <Button variant="contained" type="submit">
-                Save
-              </Button>
-            </Grid>
-          </Grid>
-          <Collapse in={openError}>
-            <Alert
-              severity={errorDetail.severity}
-              variant="outlined"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpenError(false);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
+    <>
+      <SnakAlert
+        open={open}
+        setOpen={setOpen}
+        severity={severity}
+        message={message}
+      />
+      <Formik
+        initialValues={{
+          ecode: "",
+        }}
+        validationSchema={Yup.object({
+          ecode: Yup.string().min(5).max(6).required("Required"),
+        })}
+        onSubmit={(values, actions) => {
+          codeService
+            .search(values.ecode)
+            .then((data) => {
+              setSeverity("error");
+              setMessage("Duplicate Code! Please create unique one");
+              setOpen(true);
+              setFound(true);
+            })
+            .catch((error) => {
+              if (error.response.status === 404) {
+                setFound(false);
               }
-              sx={{ mb: 2 }}
+            });
+          if (!found) {
+            codeService
+              .create({ code: values.ecode })
+              .then((data) => {
+                setEcodes([...ecodes, data]);
+                setSeverity("success");
+                setMessage("Created successfully.");
+                setOpen(true);
+              })
+              .catch((error) => {
+                JSON.stringify(error);
+                if (error.response.status === 422) {
+                  setSeverity("error");
+                  setMessage("Something went wrong!");
+                  setOpen(true);
+                }
+              });
+            actions.resetForm();
+          }
+          actions.setSubmitting(false);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              {errorDetail.message}
-            </Alert>
-          </Collapse>
-        </form>
-      )}
-    </Formik>
+              <Grid item md={9} lg={9}>
+                <TextField
+                  fullWidth
+                  error={Boolean((touched.ecode && errors.ecode) || found)}
+                  variant="outlined"
+                  id="ecode-id"
+                  type="string"
+                  value={values.ecode}
+                  name="ecode"
+                  onBlur={handleBlur}
+                  onChange={(e) => {
+                    handleChange(e);
+                    findCode(e);
+                  }}
+                  label="Code"
+                  sx={{ m: 1 }}
+                  inputProps={{ style: { textTransform: "uppercase" } }}
+                />
+                {touched.ecode && errors.ecode && (
+                  <FormHelperText sx={{ m: 1 }} error id="helper-text-ecode">
+                    {errors.ecode}
+                  </FormHelperText>
+                )}
+                {found && (
+                  <FormHelperText
+                    sx={{ m: 1 }}
+                    error
+                    id="helper-duplicate-ecode"
+                  >
+                    Duplicate Tag!
+                  </FormHelperText>
+                )}
+              </Grid>
+              <Grid item md={2} lg={2}>
+                <Button
+                id="code-id-button"
+                  variant="contained"
+                  disabled={found || errors.ecode}
+                  type="submit"
+                >
+                  Save
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        )}
+      </Formik>
+    </>
   );
 };
 
-ECodeForm.propTypes = {};
+ECodeForm.propTypes = {
+  children: PropTypes.node,
+  ecodes: PropTypes.array.isRequired,
+  setEcodes: PropTypes.func.isRequired,
+};
 
 export default ECodeForm;

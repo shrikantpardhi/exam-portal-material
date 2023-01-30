@@ -1,5 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 const BASE_URL = "http://localhost:9090/api/v1/";
+const access =
+  "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2NzUxMTEzMTgsImlhdCI6MTY3NTA5MzMxOH0.s9Dj58_7qlMlppFYbod8Io99wNRy7fwPEm8QCwSaxCe9KfR-QNZBL_mNTtTpJkBot7OPOaYUlTUGIiP9ACYzjQ";
 
 export default axios.create({
   baseURL: BASE_URL,
@@ -13,9 +15,8 @@ export const axiosPrivate = axios.create({
 
 axiosPrivate.interceptors.request.use(
   (config) => {
-    const token =
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2NzUwOTMxNDgsImlhdCI6MTY3NTA3NTE0OH0.r69jsc1hMJmeNPojrD9KleH8LvMHuaWV_pnhuGcF_reFn8-Z7CpJI7xyg01HvuqGhjsfu8gTiDlgYNzO67E8IA";
-if (!config.headers["Authorization"]) {
+    const token = access;
+    if (!config.headers["Authorization"]) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
@@ -30,8 +31,7 @@ axiosPrivate.interceptors.response.use(
 
     if (error.response.status === 401 && !prevRequest._retry) {
       prevRequest._retry = true;
-      const refreshToken =
-        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2NzUwOTMxNDgsImlhdCI6MTY3NTA3NTE0OH0.r69jsc1hMJmeNPojrD9KleH8LvMHuaWV_pnhuGcF_reFn8-Z7CpJI7xyg01HvuqGhjsfu8gTiDlgYNzO67E8IA";
+      const refreshToken = access;
 
       // get new token and use for later
       return axiosPrivate(prevRequest);

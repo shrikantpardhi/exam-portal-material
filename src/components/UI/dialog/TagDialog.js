@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import TagForm from "../forms/TagForm";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import AvailableTagList from '../Widgets/AvailableTagList';
 import { TagService } from '../../../service/TagService';
 
@@ -31,27 +33,24 @@ const TagDialog = (props) => {
       sx={{ zIndex: theme.zIndex.modal }}
       // scroll="paper"
     >
-      <DialogTitle>
-        <Typography
-          sx={{
-            ...theme.typography.h5,
-            fontSize: "1.25rem",
-            textAlign: "center",
-          }}
-        >
-          Exam Code
-        </Typography>
+      <DialogTitle
+        sx={{
+          ml: 1,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h3>Tag</h3>
+        <IconButton onClick={handleTag}>
+          <CloseIcon />
+        </IconButton>
       </DialogTitle>
       <DialogContent>
-        <TagForm
-          tags={tags}
-          setTags={setTags}
-        />
+        <TagForm tags={tags} setTags={setTags} />
         {/* available tags  */}
         <Divider>Available Tags</Divider>
-        <AvailableTagList
-          tags={tags}
-        />
+        <AvailableTagList tags={tags} />
       </DialogContent>
     </Dialog>
   );
