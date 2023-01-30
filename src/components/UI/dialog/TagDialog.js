@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useTheme } from "@mui/styles";
 import {
   Dialog,
@@ -9,11 +9,22 @@ import {
 } from "@mui/material";
 import TagForm from "../forms/TagForm";
 import AvailableTagList from '../Widgets/AvailableTagList';
-import { tags } from '../../../data';
+import { TagService } from '../../../service/TagService';
 
 const TagDialog = (props) => {
   const theme = useTheme();
   const { openTag, handleTag } = props;
+  const [loading, setLoading] = useState(true);
+  const [tags, setTags] = useState([]);
+  const tagService = new TagService();
+
+  useEffect(() => {
+    tagService.getAll().then((data) => {
+      setTags(data);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <Dialog
       open={openTag}
@@ -34,10 +45,19 @@ const TagDialog = (props) => {
         </Typography>
       </DialogTitle>
       <DialogContent>
-        <TagForm />
+        <TagForm
+          tags={tags}
+          loading={loading}
+          setLoading={setLoading}
+          setTags={setTags}
+        />
         {/* available tags  */}
         <Divider>Available Tags</Divider>
-        <AvailableTagList tags={tags} />
+        <AvailableTagList
+          tags={tags}
+          loading={loading}
+          setLoading={setLoading}
+        />
       </DialogContent>
     </Dialog>
   );

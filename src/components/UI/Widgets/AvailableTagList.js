@@ -12,12 +12,13 @@ const AvailableTagList = (props) => {
         overflowY: "scroll",
       }}
     >
-      {tags.length === 0 ? (
+      {tags === null ? (
         <Typography> No Tags available!</Typography>
       ) : (
         tags.map((option) => {
           return (
             <Button
+              key={option.name}
               variant="outlined"
               style={{ cursor: "not-allowed" }}
               sx={{ m: 1 }}
