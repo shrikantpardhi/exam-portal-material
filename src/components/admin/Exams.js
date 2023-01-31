@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-
 import { useTheme } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
@@ -10,13 +9,15 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link, useNavigate } from "react-router-dom";
-import { exams, tags, educatorCodes } from "../../data";
+import { Link } from "react-router-dom";
 import AddExamDialog from "../UI/dialog/AddExamDialog";
 import ECodeDialog from "../UI/dialog/ECodeDialog";
 import TagDialog from "../UI/dialog/TagDialog";
-
-const label = { inputProps: { "aria-label": "Swich User State" } };
+import { TagService } from "../../service/TagService";
+import { EcodeService } from "../../service/EcodeService";
+import { ExamService } from "../../service/ExamService";
+import DeleteExamDialog from "../UI/dialog/DeleteExamDialog";
+import dayjs from "dayjs";
 
 export const Exams = (props) => {
   const initialExam = {
@@ -37,10 +38,25 @@ export const Exams = (props) => {
   };
   const theme = useTheme();
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentExam, setCurrentExam] = useState(initialExam);
-  const [examRows, setExamRows] = useState(exams);
-  let navigate = useNavigate();
+  const [edit, setEdit] = useState(false);
+  const [openConfirm, setConfirm] = useState(false);
+
+  const [tags, setTags] = useState([]);
+  const [ecodes, setEcodes] = useState([]);
+  const [exams, setExams] = useState([]);
+
+  const tagService = new TagService();
+  const codeService = new EcodeService();
+  const examService = new ExamService();
+
+  useEffect(() => {
+    tagService.getAll().then((data) => setTags(data));
+    codeService.getAll().then((data) => setEcodes(data));
+    examService.getAll().then((data) => setExams(data));
+    setLoading(false);
+  }, []);
 
   const [openCodeDialog, setOpenCodeDialog] = useState(false);
 
@@ -59,12 +75,18 @@ export const Exams = (props) => {
   };
 
   const handleClose = () => {
+    setEdit(false);
     setCurrentExam(initialExam);
     setOpenDialog(false);
   };
 
   const handleDelete = (row) => () => {
-    console.log(row);
+    setCurrentExam(row);
+    setConfirm(!openConfirm);
+  };
+
+  const handleConfirm = () => {
+    setConfirm(!openConfirm);
   };
 
   const columns = [
@@ -79,6 +101,12 @@ export const Exams = (props) => {
       field: "examDuration",
       headerName: "Duration",
       type: "number",
+      flex: 1,
+    },
+    {
+      field: "educatorCode",
+      headerName: "Code",
+      valueGetter: (params) => `${params.row?.educatorCode?.code}`,
       flex: 1,
     },
     {
@@ -97,6 +125,7 @@ export const Exams = (props) => {
     {
       field: "created",
       headerName: "Create At",
+      valueFormatter: (params) => dayjs(params.value).format("DD/MM/YYYY"),
       flex: 1,
     },
     {
@@ -124,6 +153,7 @@ export const Exams = (props) => {
               sx={{ ml: 1 }}
               onClick={(event) => {
                 setCurrentExam(row);
+                setEdit(true);
                 handleClickOpen();
               }}
             >
@@ -142,6 +172,7 @@ export const Exams = (props) => {
 
   return (
     <>
+      {/* Body Header section */}
       <Box
         sx={{
           m: 3,
@@ -179,7 +210,10 @@ export const Exams = (props) => {
               </Button>
               <Button
                 variant="contained"
-                onClick={handleClickOpen}
+                onClick={(event) => {
+                  setEdit(false);
+                  handleClickOpen();
+                }}
                 startIcon={<AddIcon />}
                 size="small"
                 sx={{ ml: 1 }}
@@ -191,7 +225,7 @@ export const Exams = (props) => {
         </Box>
         <Box sx={{ height: 400 }}>
           <DataGrid
-            rows={examRows}
+            rows={exams}
             columns={columns}
             pageSize={5}
             disableColumnSelector
@@ -203,22 +237,34 @@ export const Exams = (props) => {
             }}
             loading={loading}
             rowsPerPageOptions={[5]}
+            getRowId={(row) => row.examId + row.examTitle}
             experimentalFeatures={{ newEditingApi: true }}
           />
         </Box>
       </Box>
       {/* Exam Dialog */}
       <AddExamDialog
+        exams={exams}
         currentExam={currentExam}
         tags={tags}
-        educatorCodes={educatorCodes}
+        ecodes={ecodes}
         openDialog={openDialog}
         handleClose={handleClose}
+        edit={edit}
+        setExams={setExams}
       />
       {/* Exam Code Dialog */}
       <ECodeDialog openECode={openCodeDialog} handleECode={handleCodeDialog} />
       {/* Tag Dialog */}
       <TagDialog openTag={openTagDialog} handleTag={handleTagDialog} />
+      {/* Delete exam dialog */}
+      <DeleteExamDialog
+        exams={exams}
+        setExams={setExams}
+        exam={currentExam}
+        openConfirm={openConfirm}
+        handleConfirm={handleConfirm}
+      />
     </>
   );
 };

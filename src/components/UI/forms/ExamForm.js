@@ -15,41 +15,48 @@ import * as Yup from "yup";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Checkbox from "@mui/material/Checkbox";
+import { ExamService } from "../../../service/ExamService";
+import SnakAlert from "../alert/SnakAlert";
 
 const ExamForm = (props) => {
   const theme = useTheme();
-  const { currentExam, tags, educatorCodes, handleClose } = props;
+  const { exams, currentExam, tags, ecodes, handleClose, edit, setExams } =
+    props;
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const examService = new ExamService();
 
+  // eslint-disable-next-line no-extend-native
   Date.prototype.addDays = function (days) {
     var date = new Date(this.valueOf());
     date.setDate(date.getDate() + days);
     return date;
   };
 
+  const handleCode = (event) => {
+    console.log(JSON.stringify(event.target.value));
+  };
+  const handleTags = (event) => {
+    console.log(JSON.stringify(event.target.value));
+  };
+
   return (
     <Formik
       initialValues={{
-        examId: currentExam.examId.length !== 0 ? currentExam.examId : 0,
-        examTitle:
-          currentExam.examTitle.length !== 0 ? currentExam.examTitle : "",
-        examDescription: "",
-        examDuration:
-          currentExam.examDuration !== 0 ? currentExam.examDuration : "",
-        totalMark: currentExam.totalMark !== 0 ? currentExam.totalMark : "",
-        tagList: [],
-        code: {},
-        examStartDate:
-          currentExam.examStartDate.length !== 0
-            ? currentExam.examStartDate
-            : new Date(),
-        examEndDate:
-          currentExam.examEndDate.length !== 0
-            ? currentExam.examEndDate
-            : new Date().addDays(30),
+        examId: currentExam?.examId,
+        examTitle: currentExam?.examTitle,
+        examDescription: currentExam?.examDescription,
+        examDuration: currentExam?.examDuration,
+        totalMark: currentExam?.totalMark,
+        tags: [],
+        educatorCode: {},
+        examStartDate: currentExam?.examStartDate || new Date(),
+        examEndDate: currentExam?.examEndDate || new Date().addDays(30),
         totalQuestions: 0,
-        isNegativeAllowed: false,
-        isPaid: false,
-        status: false,
+        isNegativeAllowed: currentExam?.isNegativeAllowed,
+        isPaid: currentExam?.isPaid,
+        status: currentExam?.status,
       }}
       validationSchema={Yup.object({
         examTitle: Yup.string()
@@ -71,19 +78,59 @@ const ExamForm = (props) => {
           .integer()
           .required("Required"),
         examEndDate: Yup.string().required("Required"),
+        tags: Yup.array()
+          .of(
+            Yup.object().shape({
+              tagId: Yup.string(),
+              name: Yup.string(),
+            })
+          )
+          .required(),
+        educatorCode: Yup.object()
+          .shape({
+            codeId: Yup.string(),
+            code: Yup.string(),
+            isProtected: Yup.boolean(),
+            created: Yup.string(),
+            updated: Yup.string(),
+          })
+          .required(),
       })}
-      onSubmit={(values) => {
+      onSubmit={(values, actions) => {
         console.log(JSON.stringify(values));
-        //save data here
-        //   setCategories([
-        //     ...categories,
-        //     { id: "6", title: values.category },
-        //   ]);
-        handleClose(false);
-        //   setTimeout(() => {
-        //     setSubmitting(false);
-        //     handleClose();
-        //   }, 400);
+        edit === true && examService
+          .update(values)
+          .then((data) => {
+            setSeverity("success");
+            setMessage("Updated successfully.");
+            setOpen(true);
+            actions.resetForm();
+            handleClose(false);
+          })
+          .catch((error) => {
+            setSeverity("error");
+            setMessage("Something went wrong!");
+            setOpen(true);
+          });
+        edit === false &&
+          examService
+            .create(values)
+            .then((data) => {
+              exams.push(data);
+              setExams(exams);
+              setSeverity("success");
+              setMessage("Created successfully.");
+              setOpen(true);
+              actions.resetForm();
+              handleClose(false);
+            })
+            .catch((error) => {
+              setSeverity("error");
+              setMessage("Something went wrong!");
+              setOpen(true);
+            });
+        
+        actions.setSubmitting(false);
       }}
     >
       {({
@@ -98,6 +145,12 @@ const ExamForm = (props) => {
         /* and other goodies */
       }) => (
         <form noValidate onSubmit={handleSubmit} sx={{ marginTop: 1 }}>
+          <SnakAlert
+            open={open}
+            setOpen={setOpen}
+            severity={severity}
+            message={message}
+          />
           <TextField
             fullWidth
             error={Boolean(touched.examTitle && errors.examTitle)}
@@ -184,22 +237,37 @@ const ExamForm = (props) => {
             </Grid>
           </Grid>
 
+          {edit === true && (
+            <FormHelperText sx={{ m: 1 }} error id="helper-text-tags">
+              Selected Items:  {currentExam?.tags.map((option) => option?.name+", ")}
+            </FormHelperText>
+          )}
           <Autocomplete
             multiple
+            error={Boolean(touched.tags && errors.tags)}
             id="tags-id"
-            name="tagList"
+            name="tags"
             options={tags}
-            // isOptionEqualToValue={(option, value) => option === value}
             onBlur={handleBlur}
-            // onChange={(e, value) => setFieldValue("tagList", value)}
+            onChange={(e, value) => setFieldValue("tags", value)}
             getOptionLabel={(option) => option.name}
+            isOptionEqualToValue={(option, value) => option.name === value.name}
             filterSelectedOptions
             renderInput={(params) => (
-              <TextField {...params} label="Tags" placeholder="Tag" />
+              <TextField
+                {...params}
+                name="tags"
+                label="Tags"
+                placeholder="Tag"
+              />
             )}
             sx={{ m: 1 }}
           />
-
+          {touched.tags && errors.tags && (
+            <FormHelperText sx={{ m: 1 }} error id="helper-text-tags">
+              {errors.tags}
+            </FormHelperText>
+          )}
           <Grid container direction="row" justifyContent="space-between">
             <Grid item sm>
               <Box sx={{ zIndex: theme.zIndex.modal + 3, m: 1, width: "100%" }}>
@@ -257,20 +325,38 @@ const ExamForm = (props) => {
             </Grid>
           </Grid>
 
+          {edit === true && (
+            <FormHelperText sx={{ m: 1 }} error id="helper-text-tags">
+              Selected Items: {currentExam?.educatorCode?.code}`
+            </FormHelperText>
+          )}
           <Autocomplete
+            error={Boolean(touched.educatorCode && errors.educatorCode)}
             id="educator-code-id"
-            name="code"
-            options={educatorCodes}
-            onBlur={handleBlur}
+            name="educatorCode"
+            onChange={(event, value) => {
+              console.log(value);
+              setFieldValue("educatorCode", value);
+            }}
+            options={ecodes}
             getOptionLabel={(option) => option.code}
             isOptionEqualToValue={(option, value) => option.code === value.code}
             filterSelectedOptions
             renderInput={(params) => (
-              <TextField {...params} label="Educator Code" placeholder="Code" />
+              <TextField
+                {...params}
+                name="educatorCode"
+                label="Educator Code"
+                placeholder="Code"
+              />
             )}
             sx={{ m: 1 }}
           />
-
+          {touched.educatorCode && errors.educatorCode && (
+            <FormHelperText sx={{ m: 1 }} error id="helper-text-educatorCode">
+              {errors.educatorCode}
+            </FormHelperText>
+          )}
           <Grid container justifyContent="space-between" sx={{ marginTop: 1 }}>
             <Grid item>
               <FormControlLabel
@@ -333,10 +419,13 @@ const ExamForm = (props) => {
 
 ExamForm.propTypes = {
   children: PropTypes.node,
+  exams: PropTypes.array.isRequired,
   currentExam: PropTypes.object.isRequired,
   tags: PropTypes.array.isRequired,
-  educatorCodes: PropTypes.array.isRequired,
+  ecodes: PropTypes.array.isRequired,
   handleClose: PropTypes.func.isRequired,
+  edit: PropTypes.bool.isRequired,
+  setExams: PropTypes.func.isRequired,
 };
 
 export default ExamForm;

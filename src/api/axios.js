@@ -1,8 +1,8 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:9090/api/v1/";
 const access =
-  "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2NzUxMTEzMTgsImlhdCI6MTY3NTA5MzMxOH0.s9Dj58_7qlMlppFYbod8Io99wNRy7fwPEm8QCwSaxCe9KfR-QNZBL_mNTtTpJkBot7OPOaYUlTUGIiP9ACYzjQ";
-
+  "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2NzUxNzk4MDcsImlhdCI6MTY3NTE2MTgwN30.dKAXz373CJt9ZhshnRvFcm0XxdJBPiQ1-KmXXorrSutaTY1-Gp2uTfiwK4wmNFOG3N5860YMJY9YbN2cX5GHiA";
+  
 export default axios.create({
   baseURL: BASE_URL,
 });

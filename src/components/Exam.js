@@ -12,7 +12,6 @@ import {
 import { useTheme, styled } from "@mui/styles";
 import Paper from "@mui/material/Paper";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useWindowDimensions from "./util/useWindowDimensions";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 

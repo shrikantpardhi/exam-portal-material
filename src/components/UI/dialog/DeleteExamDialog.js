@@ -10,33 +10,34 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { EcodeService } from "../../../service/EcodeService";
 import SnakAlert from "../alert/SnakAlert";
+import { ExamService } from "../../../service/ExamService";
 
-const DeleteECodeDialog = (props) => {
-  const theme = useTheme();
-  const { ecodes, setEcodes, ecode, openConfirm, handleConfirm } = props;
-  const [open, setOpen] = React.useState(false);
-  const [severity, setSeverity] = React.useState("");
-  const [message, setMessage] = React.useState("");
-  const codeService = new EcodeService();
+const DeleteExamDialog = (props) => {
+     const theme = useTheme();
+     const { exams, setExams, exam, openConfirm, handleConfirm } = props;
+     const [open, setOpen] = React.useState(false);
+     const [severity, setSeverity] = React.useState("");
+     const [message, setMessage] = React.useState("");
+     const examService = new ExamService();
 
-  const deleteECode = () => {
-    codeService
-      .delete(ecode)
-      .then((data) =>
-        {
-          setSeverity("info");
-          setMessage("Code deleted!");
-          setOpen(true);
-          setEcodes(ecodes.filter((option, i) => option.codeId != ecode.codeId));}
-      )
+      const deleteExam = () => {
+    examService
+      .delete(exam.examId)
+      .then((data) => {
+        setSeverity("success");
+        setMessage("Code deleted!");
+        setOpen(true);
+        setExams(exams.filter((option, i) => option.examId !== exam.examId));
+        handleConfirm();
+      })
       .catch((error) => {
         setSeverity("error");
         setMessage("Something went wrong!");
         setOpen(true);
       });
   };
+
 
   return (
     <>
@@ -51,7 +52,7 @@ const DeleteECodeDialog = (props) => {
         onClose={handleConfirm}
         sx={{ zIndex: theme.zIndex.modal }}
         fullWidth
-        maxWidth="md"
+        maxWidth="sm"
       >
         <DialogTitle>{"Confirm"}</DialogTitle>
         <DialogContent>
@@ -61,7 +62,7 @@ const DeleteECodeDialog = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleConfirm}>Back</Button>
-          <Button onClick={deleteECode} color="warning" autoFocus>
+          <Button onClick={deleteExam} color="warning" autoFocus>
             Delete
           </Button>
         </DialogActions>
@@ -70,13 +71,13 @@ const DeleteECodeDialog = (props) => {
   );
 };
 
-DeleteECodeDialog.propTypes = {
+DeleteExamDialog.propTypes = {
   children: PropTypes.node,
-  ecodes: PropTypes.array.isRequired,
-  setEcodes: PropTypes.func.isRequired,
-  ecode: PropTypes.object.isRequired,
+  exams: PropTypes.array.isRequired,
+  setExams: PropTypes.func.isRequired,
+  exam: PropTypes.object.isRequired,
   openConfirm: PropTypes.bool.isRequired,
   handleConfirm: PropTypes.func.isRequired,
 };
 
-export default DeleteECodeDialog;
+export default DeleteExamDialog;

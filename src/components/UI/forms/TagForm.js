@@ -13,7 +13,6 @@ const TagForm = (props) => {
   const [message, setMessage] = React.useState("");
   const tagService = new TagService();
   const [found, setFound] = useState(false);
-  const [tag, setTag] = useState(null);
 
   const findTag = (e) => {
     let found = tags.find((option, i) => {
